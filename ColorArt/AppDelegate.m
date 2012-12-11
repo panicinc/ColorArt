@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import <tgmath.h>
 #import "SLColorArt.h"
+
 @implementation AppDelegate
 
 - (IBAction)chooseImage:(id)sender
