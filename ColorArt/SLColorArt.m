@@ -34,6 +34,8 @@
 @end
 
 @interface SLColorArt ()
+@property(nonatomic, copy) NSImage *image;
+@property NSSize scaledSize;
 @property(copy,readwrite) NSColor *backgroundColor;
 @property(copy,readwrite) NSColor *primaryColor;
 @property(copy,readwrite) NSColor *secondaryColor;
@@ -42,31 +44,23 @@
 
 @implementation SLColorArt
 
-- (id)initWithImage:(NSImage*)image
+- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size
 {
     self = [super init];
 
     if (self)
     {
         self.image = image;
+        self.scaledSize = size;
+        [self _processImage];
     }
 
     return self;
 }
 
-- (void)setImage:(NSImage *)image
-{
-    if (_image != image)
-    {
-        _image = [image copy];
-        [self _processImage];
-    }
-}
-
 - (void)_processImage
 {
-    // scale down to 320x320 for the view
-    NSImage *finalImage = [self _scaleImage:self.image size:NSMakeSize(320., 320.)];
+    NSImage *finalImage = [self _scaleImage:self.image size:self.scaledSize];
 
     NSDictionary *colors = [self _analyzeImage:self.image];
 

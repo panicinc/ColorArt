@@ -15,5 +15,4 @@
 @property (assign) IBOutlet NSTextField *primaryField;
 @property (assign) IBOutlet NSTextField *secondaryField;
 @property (assign) IBOutlet NSTextField *secondary1Field;
-
 @end

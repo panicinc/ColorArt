@@ -29,7 +29,7 @@
 			NSImage *image = [[NSImage alloc] initByReferencingURL:url];
 			if ( image != nil )
 			{
-                SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image];
+                SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:NSMakeSize(320., 320.)];
 
                 self.imageView.image = colorArt.scaledImage;
                 self.window.backgroundColor = colorArt.backgroundColor;
