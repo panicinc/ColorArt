@@ -20,11 +20,6 @@
 
 @synthesize image = _image;
 
-- (void)dealloc
-{
-	[_image release];
-	[super dealloc];
-}
 
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -38,7 +33,7 @@
 	// lazy way to get fade color
 	NSColor *backgroundColor = [[self window] backgroundColor];
 		
-	NSGradient *gradient = [[[NSGradient alloc] initWithColorsAndLocations:backgroundColor, 0.0, backgroundColor, .01, [backgroundColor colorWithAlphaComponent:0.05], 1.0, nil] autorelease];
+	NSGradient *gradient = [[NSGradient alloc] initWithColorsAndLocations:backgroundColor, 0.0, backgroundColor, .01, [backgroundColor colorWithAlphaComponent:0.05], 1.0, nil];
 
 	[gradient drawInRect:imageRect angle:0.0];
 }

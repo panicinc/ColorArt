@@ -16,9 +16,9 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) IBOutlet NSImageView *imageView;
-@property (assign) IBOutlet NSTextField *primaryField;
-@property (assign) IBOutlet NSTextField *secondaryField;
-@property (assign) IBOutlet NSTextField *secondary1Field;
+@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSImageView *imageView;
+@property (weak) IBOutlet NSTextField *primaryField;
+@property (weak) IBOutlet NSTextField *secondaryField;
+@property (weak) IBOutlet NSTextField *secondary1Field;
 @end

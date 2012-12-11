@@ -36,7 +36,7 @@
 @interface PCCountedColor : NSObject
 
 @property (assign) NSUInteger count;
-@property (retain) NSColor *color;
+@property (strong) NSColor *color;
 
 - (id)initWithColor:(NSColor*)color count:(NSUInteger)count;
 
@@ -84,8 +84,8 @@
 - (NSImage*)_scaleImage:(NSImage*)image size:(NSSize)scaledSize
 {
     NSSize imageSize = [image size];
-    NSImage *squareImage = [[[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)] autorelease];
-    NSImage *scaledImage = [[[NSImage alloc] initWithSize:scaledSize] autorelease];
+    NSImage *squareImage = [[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)];
+    NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
     NSRect drawRect;
 
     // make the image square
@@ -111,8 +111,8 @@
     // convert back to readable bitmap data
 
     CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
-    NSBitmapImageRep *bitmapRep = [[[NSBitmapImageRep alloc] initWithCGImage:cgImage] autorelease];
-    NSImage *finalImage = [[[NSImage alloc] initWithSize:scaledImage.size] autorelease];
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+    NSImage *finalImage = [[NSImage alloc] initWithSize:scaledImage.size];
     [finalImage addRepresentation:bitmapRep];
     return finalImage;
 }
@@ -161,7 +161,6 @@
     [dict setObject:secondaryColor forKey:kAnalyzedSecondaryColor];
     [dict setObject:detailColor forKey:kAnalyzedDetailColor];
 
-	[imageColors release];
 
     return [NSDictionary dictionaryWithDictionary:dict];
 }
@@ -211,7 +210,6 @@
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
 
 		[sortedColors addObject:container];
-		[container release];
 	}
 
 	[sortedColors sortUsingSelector:@selector(compare:)];
@@ -271,7 +269,6 @@
 			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
 
 			[sortedColors addObject:container];
-			[container release];
 		}
 	}
 
@@ -450,13 +447,6 @@
 
 	return self;
 }
-
-- (void)dealloc
-{
-	[self.color release];
-	[super dealloc];
-}
-
 
 - (NSComparisonResult)compare:(PCCountedColor*)object
 {
