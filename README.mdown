@@ -1,9 +1,11 @@
 So, what's the story?
 ===
 
-This morning, I saw a neat post on (Panic's blog)[http://www.panic.com/blog/2012/12/itunes-11-and-colors/] that showed an example of how to duplicate iTunes 11's cover art color matching algorithm. I thought it'd be worthwhile to make the code a bit more reusable, and...here we are!
+This morning, I saw a neat post on Panic's blog (http://www.panic.com/blog/2012/12/itunes-11-and-colors/) that showed an example of how to duplicate iTunes 11's cover art color matching algorithm. I thought it'd be worthwhile to make the code a bit more reusable, and...here we are!
 
 I have extracted all of the interesting code into a reusable class whose usage should be fairly self-explanatory. Let me know if you have any questions.
+
+![Screenshot](TBD)
 
 License
 ===
