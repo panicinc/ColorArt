@@ -33,7 +33,12 @@
 				// scale down to 320x320 for the view
                 NSImage *finalImage = [self scaleImage:image size:NSMakeSize(320., 320.)];
 								
-				[self analizeImage:/*finalImage*/image];
+				NSDictionary *colors = [self analyzeImage:/*finalImage*/image];
+
+                self.window.backgroundColor = [colors objectForKey:kAnalyzedBackgroundColor];
+                self.primaryField.textColor = [colors objectForKey:kAnalyzedPrimaryColor];
+                self.secondaryField.textColor = [colors objectForKey:kAnalyzedSecondaryColor];
+                self.secondary1Field.textColor = [colors objectForKey:kAnalyzedDetailColor];
 				
 				[self.imageView setImage:finalImage];
 				[image release];
@@ -78,7 +83,7 @@
     return finalImage;
 }
 
-- (void)analizeImage:(NSImage*)anImage
+- (NSDictionary*)analyzeImage:(NSImage*)anImage
 {
 	NSCountedSet *imageColors = nil;
 	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors];
@@ -116,12 +121,15 @@
 			detailColor = [NSColor blackColor];
 	}
 	
-	[self.window setBackgroundColor:backgroundColor];
-	[self.primaryField setTextColor:primaryColor];
-	[self.secondaryField setTextColor:secondaryColor];
-	[self.secondary1Field setTextColor:detailColor];
-	
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:4];
+    [dict setObject:backgroundColor forKey:kAnalyzedBackgroundColor];
+    [dict setObject:primaryColor forKey:kAnalyzedPrimaryColor];
+    [dict setObject:secondaryColor forKey:kAnalyzedSecondaryColor];
+    [dict setObject:detailColor forKey:kAnalyzedDetailColor];
+
 	[imageColors release];
+
+    return [NSDictionary dictionaryWithDictionary:dict];
 }
 
 

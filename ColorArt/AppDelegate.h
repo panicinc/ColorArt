@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define kAnalyzedBackgroundColor @"kAnalyzedBackgroundColor"
+#define kAnalyzedPrimaryColor @"kAnalyzedPrimaryColor"
+#define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
+#define kAnalyzedDetailColor @"kAnalyzedDetailColor"
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
@@ -16,7 +21,7 @@
 @property (assign) IBOutlet NSTextField *secondaryField;
 @property (assign) IBOutlet NSTextField *secondary1Field;
 
-- (void)analizeImage:(NSImage*)anImage;
+- (NSDictionary*)analyzeImage:(NSImage*)anImage;
 
 @end
 
