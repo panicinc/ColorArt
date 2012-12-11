@@ -31,40 +31,8 @@
 			if ( image != nil )
 			{
 				// scale down to 320x320 for the view
-                [self scaleImage]
-				
-				NSSize imageSize = [image size];
-				NSImage *squareImage = [[[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)] autorelease];
-				NSImage *scaledImage = [[[NSImage alloc] initWithSize:NSMakeSize(320., 320.)] autorelease];
-				NSRect drawRect;
-				
-				// make the image square
-				if ( imageSize.height > imageSize.width )
-				{
-					drawRect = NSMakeRect(0, imageSize.height - imageSize.width, imageSize.width, imageSize.width);
-				}
-				else
-				{
-					drawRect = NSMakeRect(0, 0, imageSize.height, imageSize.height);
-				}
-				
-				[squareImage lockFocus];
-				[image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.width) fromRect:drawRect operation:NSCompositeSourceOver fraction:1.0];
-				[squareImage unlockFocus];
-				
-				// scale the image to the desired size
-				
-				[scaledImage lockFocus];
-				[squareImage drawInRect:NSMakeRect(0, 0, 320., 320.) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-				[scaledImage unlockFocus];
-				
-				// convert back to readable bitmap data
-				
-				CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
-				NSBitmapImageRep *bitmapRep = [[[NSBitmapImageRep alloc] initWithCGImage:cgImage] autorelease];
-				NSImage *finalImage = [[[NSImage alloc] initWithSize:scaledImage.size] autorelease];
-				[finalImage addRepresentation:bitmapRep];
-				
+                NSImage *finalImage = [self scaleImage:image size:NSMakeSize(320., 320.)];
+								
 				[self analizeImage:/*finalImage*/image];
 				
 				[self.imageView setImage:finalImage];
@@ -74,6 +42,41 @@
 	}];
 }
 
+- (NSImage*)scaleImage:(NSImage*)image size:(NSSize)scaledSize
+{
+    NSSize imageSize = [image size];
+    NSImage *squareImage = [[[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)] autorelease];
+    NSImage *scaledImage = [[[NSImage alloc] initWithSize:scaledSize] autorelease];
+    NSRect drawRect;
+
+    // make the image square
+    if ( imageSize.height > imageSize.width )
+    {
+        drawRect = NSMakeRect(0, imageSize.height - imageSize.width, imageSize.width, imageSize.width);
+    }
+    else
+    {
+        drawRect = NSMakeRect(0, 0, imageSize.height, imageSize.height);
+    }
+
+    [squareImage lockFocus];
+    [image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.width) fromRect:drawRect operation:NSCompositeSourceOver fraction:1.0];
+    [squareImage unlockFocus];
+
+    // scale the image to the desired size
+
+    [scaledImage lockFocus];
+    [squareImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    [scaledImage unlockFocus];
+
+    // convert back to readable bitmap data
+
+    CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
+    NSBitmapImageRep *bitmapRep = [[[NSBitmapImageRep alloc] initWithCGImage:cgImage] autorelease];
+    NSImage *finalImage = [[[NSImage alloc] initWithSize:scaledImage.size] autorelease];
+    [finalImage addRepresentation:bitmapRep];
+    return finalImage;
+}
 
 - (void)analizeImage:(NSImage*)anImage
 {
