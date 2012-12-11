@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830D098166E810C00FFEBD5 /* PCFadedImageView.m */; };
+		18DFE51A16697F1500792C2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DFE51916697F1500792C2E /* Cocoa.framework */; };
+		18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52216697F1500792C2E /* InfoPlist.strings */; };
+		18DFE52616697F1500792C2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52516697F1500792C2E /* main.m */; };
+		18DFE52A16697F1500792C2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52816697F1500792C2E /* Credits.rtf */; };
+		18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52C16697F1500792C2E /* AppDelegate.m */; };
+		18DFE53016697F1600792C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52E16697F1600792C2E /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1830D097166E810C00FFEBD5 /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
+		1830D098166E810C00FFEBD5 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
+		18DFE51516697F1500792C2E /* ColorArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18DFE51916697F1500792C2E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		18DFE51C16697F1500792C2E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		18DFE51D16697F1500792C2E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		18DFE51E16697F1500792C2E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		18DFE52116697F1500792C2E /* ColorArt-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ColorArt-Info.plist"; sourceTree = "<group>"; };
+		18DFE52316697F1500792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		18DFE52516697F1500792C2E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18DFE52716697F1500792C2E /* ColorArt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColorArt-Prefix.pch"; sourceTree = "<group>"; };
+		18DFE52916697F1500792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		18DFE52B16697F1500792C2E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18DFE52C16697F1500792C2E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		18DFE52F16697F1600792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18DFE51216697F1500792C2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DFE51A16697F1500792C2E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18DFE50A16697F1500792C2E = {
+			isa = PBXGroup;
+			children = (
+				18DFE51F16697F1500792C2E /* ColorArt */,
+				18DFE51816697F1500792C2E /* Frameworks */,
+				18DFE51616697F1500792C2E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18DFE51616697F1500792C2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18DFE51516697F1500792C2E /* ColorArt.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18DFE51816697F1500792C2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18DFE51916697F1500792C2E /* Cocoa.framework */,
+				18DFE51B16697F1500792C2E /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		18DFE51B16697F1500792C2E /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18DFE51C16697F1500792C2E /* AppKit.framework */,
+				18DFE51D16697F1500792C2E /* CoreData.framework */,
+				18DFE51E16697F1500792C2E /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		18DFE51F16697F1500792C2E /* ColorArt */ = {
+			isa = PBXGroup;
+			children = (
+				18DFE52B16697F1500792C2E /* AppDelegate.h */,
+				18DFE52C16697F1500792C2E /* AppDelegate.m */,
+				1830D097166E810C00FFEBD5 /* PCFadedImageView.h */,
+				1830D098166E810C00FFEBD5 /* PCFadedImageView.m */,
+				18DFE52E16697F1600792C2E /* MainMenu.xib */,
+				18DFE52016697F1500792C2E /* Supporting Files */,
+			);
+			path = ColorArt;
+			sourceTree = "<group>";
+		};
+		18DFE52016697F1500792C2E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18DFE52116697F1500792C2E /* ColorArt-Info.plist */,
+				18DFE52216697F1500792C2E /* InfoPlist.strings */,
+				18DFE52516697F1500792C2E /* main.m */,
+				18DFE52716697F1500792C2E /* ColorArt-Prefix.pch */,
+				18DFE52816697F1500792C2E /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18DFE51416697F1500792C2E /* ColorArt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18DFE53316697F1600792C2E /* Build configuration list for PBXNativeTarget "ColorArt" */;
+			buildPhases = (
+				18DFE51116697F1500792C2E /* Sources */,
+				18DFE51216697F1500792C2E /* Frameworks */,
+				18DFE51316697F1500792C2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ColorArt;
+			productName = ColorArt;
+			productReference = 18DFE51516697F1500792C2E /* ColorArt.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18DFE50C16697F1500792C2E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Wade Cosgrove";
+			};
+			buildConfigurationList = 18DFE50F16697F1500792C2E /* Build configuration list for PBXProject "ColorArt" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 18DFE50A16697F1500792C2E;
+			productRefGroup = 18DFE51616697F1500792C2E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18DFE51416697F1500792C2E /* ColorArt */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18DFE51316697F1500792C2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */,
+				18DFE52A16697F1500792C2E /* Credits.rtf in Resources */,
+				18DFE53016697F1600792C2E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18DFE51116697F1500792C2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DFE52616697F1500792C2E /* main.m in Sources */,
+				18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */,
+				1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		18DFE52216697F1500792C2E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DFE52316697F1500792C2E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		18DFE52816697F1500792C2E /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DFE52916697F1500792C2E /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		18DFE52E16697F1600792C2E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DFE52F16697F1600792C2E /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		18DFE53116697F1600792C2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		18DFE53216697F1600792C2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		18DFE53416697F1600792C2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
+				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		18DFE53516697F1600792C2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
+				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18DFE50F16697F1500792C2E /* Build configuration list for PBXProject "ColorArt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18DFE53116697F1600792C2E /* Debug */,
+				18DFE53216697F1600792C2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18DFE53316697F1600792C2E /* Build configuration list for PBXNativeTarget "ColorArt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18DFE53416697F1600792C2E /* Debug */,
+				18DFE53516697F1600792C2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18DFE50C16697F1500792C2E /* Project object */;
+}
