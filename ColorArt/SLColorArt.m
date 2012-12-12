@@ -17,6 +17,8 @@
 
 #import "SLColorArt.h"
 
+#define kColorThresholdMinimumPercentage 0.01
+
 #define kAnalyzedBackgroundColor @"kAnalyzedBackgroundColor"
 #define kAnalyzedPrimaryColor @"kAnalyzedPrimaryColor"
 #define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
@@ -59,6 +61,9 @@
 
     if (self)
     {
+        int x = 3;
+
+        
         self.image = image;
         self.scaledSize = size;
         [self _processImage];
@@ -204,7 +209,9 @@
 	{
 		NSUInteger colorCount = [leftEdgeColors countForObject:curColor];
 
-		if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
+        int randomColorsThreshold = (int) (pixelsHigh * kColorThresholdMinimumPercentage);
+        
+		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
 			continue;
 
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
