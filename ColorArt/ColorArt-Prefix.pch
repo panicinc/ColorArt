@@ -1,7 +1,14 @@
 //
-// Prefix header for all source files of the 'ColorArt' target in the 'ColorArt' project
+// Prefix header for all source files of the 'ColorArtiOS' target in the 'ColorArtiOS' project
 //
 
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
 #ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
 #endif

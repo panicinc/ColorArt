@@ -7,107 +7,128 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830D098166E810C00FFEBD5 /* PCFadedImageView.m */; };
-		18DFE51A16697F1500792C2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DFE51916697F1500792C2E /* Cocoa.framework */; };
-		18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52216697F1500792C2E /* InfoPlist.strings */; };
-		18DFE52616697F1500792C2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52516697F1500792C2E /* main.m */; };
-		18DFE52A16697F1500792C2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52816697F1500792C2E /* Credits.rtf */; };
-		18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52C16697F1500792C2E /* AppDelegate.m */; };
-		18DFE53016697F1600792C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52E16697F1600792C2E /* MainMenu.xib */; };
-		93FE707B1677DE9300BE484D /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FE707A1677DE9300BE484D /* SLColorArt.m */; };
+		B620268416787076004F3873 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B620268316787076004F3873 /* UIKit.framework */; };
+		B620268616787076004F3873 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B620268516787076004F3873 /* Foundation.framework */; };
+		B620268816787076004F3873 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B620268716787076004F3873 /* CoreGraphics.framework */; };
+		B62026CD16787DE7004F3873 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62026CC16787DE7004F3873 /* QuartzCore.framework */; };
+		B62026E816788B34004F3873 /* Beatles-Abbey-Road-album.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B62026D316788B34004F3873 /* Beatles-Abbey-Road-album.jpg */; };
+		B62026E916788B34004F3873 /* CAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026D516788B34004F3873 /* CAAppDelegate.m */; };
+		B62026EA16788B34004F3873 /* CAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026D716788B34004F3873 /* CAViewController.m */; };
+		B62026EB16788B34004F3873 /* CAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B62026D816788B34004F3873 /* CAViewController.xib */; };
+		B62026EC16788B34004F3873 /* ColorArt-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62026D916788B34004F3873 /* ColorArt-Info.plist */; };
+		B62026ED16788B34004F3873 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B62026DB16788B34004F3873 /* Default-568h@2x.png */; };
+		B62026EE16788B34004F3873 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B62026DC16788B34004F3873 /* Default.png */; };
+		B62026EF16788B34004F3873 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B62026DD16788B34004F3873 /* Default@2x.png */; };
+		B62026F016788B34004F3873 /* DSC_0062.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B62026DE16788B34004F3873 /* DSC_0062.jpg */; };
+		B62026F116788B34004F3873 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62026DF16788B34004F3873 /* InfoPlist.strings */; };
+		B62026F216788B34004F3873 /* LBGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E216788B34004F3873 /* LBGradient.m */; };
+		B62026F316788B34004F3873 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E316788B34004F3873 /* main.m */; };
+		B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E516788B34004F3873 /* PCFadedImageView.m */; };
+		B62026F516788B34004F3873 /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E716788B34004F3873 /* SLColorArt.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1830D097166E810C00FFEBD5 /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
-		1830D098166E810C00FFEBD5 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
-		18DFE51516697F1500792C2E /* ColorArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		18DFE51916697F1500792C2E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		18DFE51C16697F1500792C2E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		18DFE51D16697F1500792C2E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		18DFE51E16697F1500792C2E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		18DFE52116697F1500792C2E /* ColorArt-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ColorArt-Info.plist"; sourceTree = "<group>"; };
-		18DFE52316697F1500792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		18DFE52516697F1500792C2E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		18DFE52716697F1500792C2E /* ColorArt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColorArt-Prefix.pch"; sourceTree = "<group>"; };
-		18DFE52916697F1500792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		18DFE52B16697F1500792C2E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		18DFE52C16697F1500792C2E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		18DFE52F16697F1600792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		93FE70791677DE9300BE484D /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
-		93FE707A1677DE9300BE484D /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
+		B620267F16787076004F3873 /* ColorArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B620268316787076004F3873 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B620268516787076004F3873 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B620268716787076004F3873 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B62026CC16787DE7004F3873 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B62026D316788B34004F3873 /* Beatles-Abbey-Road-album.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Beatles-Abbey-Road-album.jpg"; sourceTree = "<group>"; };
+		B62026D416788B34004F3873 /* CAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAppDelegate.h; sourceTree = "<group>"; };
+		B62026D516788B34004F3873 /* CAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAAppDelegate.m; sourceTree = "<group>"; };
+		B62026D616788B34004F3873 /* CAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewController.h; sourceTree = "<group>"; };
+		B62026D716788B34004F3873 /* CAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAViewController.m; sourceTree = "<group>"; };
+		B62026D816788B34004F3873 /* CAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CAViewController.xib; sourceTree = "<group>"; };
+		B62026D916788B34004F3873 /* ColorArt-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ColorArt-Info.plist"; sourceTree = "<group>"; };
+		B62026DA16788B34004F3873 /* ColorArt-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ColorArt-Prefix.pch"; sourceTree = "<group>"; };
+		B62026DB16788B34004F3873 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B62026DC16788B34004F3873 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B62026DD16788B34004F3873 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B62026DE16788B34004F3873 /* DSC_0062.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DSC_0062.jpg; sourceTree = "<group>"; };
+		B62026E016788B34004F3873 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B62026E116788B34004F3873 /* LBGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBGradient.h; sourceTree = "<group>"; };
+		B62026E216788B34004F3873 /* LBGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBGradient.m; sourceTree = "<group>"; };
+		B62026E316788B34004F3873 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B62026E416788B34004F3873 /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
+		B62026E516788B34004F3873 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
+		B62026E616788B34004F3873 /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
+		B62026E716788B34004F3873 /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		18DFE51216697F1500792C2E /* Frameworks */ = {
+		B620267C16787076004F3873 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DFE51A16697F1500792C2E /* Cocoa.framework in Frameworks */,
+				B62026CD16787DE7004F3873 /* QuartzCore.framework in Frameworks */,
+				B620268416787076004F3873 /* UIKit.framework in Frameworks */,
+				B620268616787076004F3873 /* Foundation.framework in Frameworks */,
+				B620268816787076004F3873 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		18DFE50A16697F1500792C2E = {
+		B620267416787076004F3873 = {
 			isa = PBXGroup;
 			children = (
-				18DFE51F16697F1500792C2E /* ColorArt */,
-				18DFE51816697F1500792C2E /* Frameworks */,
-				18DFE51616697F1500792C2E /* Products */,
+				B62026D216788B34004F3873 /* ColorArt */,
+				B620268216787076004F3873 /* Frameworks */,
+				B620268016787076004F3873 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		18DFE51616697F1500792C2E /* Products */ = {
+		B620268016787076004F3873 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18DFE51516697F1500792C2E /* ColorArt.app */,
+				B620267F16787076004F3873 /* ColorArt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		18DFE51816697F1500792C2E /* Frameworks */ = {
+		B620268216787076004F3873 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				18DFE51916697F1500792C2E /* Cocoa.framework */,
-				18DFE51B16697F1500792C2E /* Other Frameworks */,
+				B62026CC16787DE7004F3873 /* QuartzCore.framework */,
+				B620268316787076004F3873 /* UIKit.framework */,
+				B620268516787076004F3873 /* Foundation.framework */,
+				B620268716787076004F3873 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		18DFE51B16697F1500792C2E /* Other Frameworks */ = {
+		B62026D216788B34004F3873 /* ColorArt */ = {
 			isa = PBXGroup;
 			children = (
-				18DFE51C16697F1500792C2E /* AppKit.framework */,
-				18DFE51D16697F1500792C2E /* CoreData.framework */,
-				18DFE51E16697F1500792C2E /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		18DFE51F16697F1500792C2E /* ColorArt */ = {
-			isa = PBXGroup;
-			children = (
-				18DFE52B16697F1500792C2E /* AppDelegate.h */,
-				18DFE52C16697F1500792C2E /* AppDelegate.m */,
-				1830D097166E810C00FFEBD5 /* PCFadedImageView.h */,
-				1830D098166E810C00FFEBD5 /* PCFadedImageView.m */,
-				18DFE52E16697F1600792C2E /* MainMenu.xib */,
-				18DFE52016697F1500792C2E /* Supporting Files */,
-				93FE70791677DE9300BE484D /* SLColorArt.h */,
-				93FE707A1677DE9300BE484D /* SLColorArt.m */,
+				B62026F616788B53004F3873 /* Supporting Files */,
+				B62026D416788B34004F3873 /* CAAppDelegate.h */,
+				B62026D516788B34004F3873 /* CAAppDelegate.m */,
+				B62026D616788B34004F3873 /* CAViewController.h */,
+				B62026D716788B34004F3873 /* CAViewController.m */,
+				B62026D816788B34004F3873 /* CAViewController.xib */,
+				B62026E116788B34004F3873 /* LBGradient.h */,
+				B62026E216788B34004F3873 /* LBGradient.m */,
+				B62026E416788B34004F3873 /* PCFadedImageView.h */,
+				B62026E516788B34004F3873 /* PCFadedImageView.m */,
+				B62026E616788B34004F3873 /* SLColorArt.h */,
+				B62026E716788B34004F3873 /* SLColorArt.m */,
 			);
 			path = ColorArt;
 			sourceTree = "<group>";
 		};
-		18DFE52016697F1500792C2E /* Supporting Files */ = {
+		B62026F616788B53004F3873 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				18DFE52116697F1500792C2E /* ColorArt-Info.plist */,
-				18DFE52216697F1500792C2E /* InfoPlist.strings */,
-				18DFE52516697F1500792C2E /* main.m */,
-				18DFE52716697F1500792C2E /* ColorArt-Prefix.pch */,
-				18DFE52816697F1500792C2E /* Credits.rtf */,
+				B62026E316788B34004F3873 /* main.m */,
+				B62026D316788B34004F3873 /* Beatles-Abbey-Road-album.jpg */,
+				B62026D916788B34004F3873 /* ColorArt-Info.plist */,
+				B62026DA16788B34004F3873 /* ColorArt-Prefix.pch */,
+				B62026DB16788B34004F3873 /* Default-568h@2x.png */,
+				B62026DC16788B34004F3873 /* Default.png */,
+				B62026DD16788B34004F3873 /* Default@2x.png */,
+				B62026DE16788B34004F3873 /* DSC_0062.jpg */,
+				B62026DF16788B34004F3873 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -115,177 +136,166 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		18DFE51416697F1500792C2E /* ColorArt */ = {
+		B620267E16787076004F3873 /* ColorArt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18DFE53316697F1600792C2E /* Build configuration list for PBXNativeTarget "ColorArt" */;
+			buildConfigurationList = B620269D16787076004F3873 /* Build configuration list for PBXNativeTarget "ColorArt" */;
 			buildPhases = (
-				18DFE51116697F1500792C2E /* Sources */,
-				18DFE51216697F1500792C2E /* Frameworks */,
-				18DFE51316697F1500792C2E /* Resources */,
+				B620267B16787076004F3873 /* Sources */,
+				B620267C16787076004F3873 /* Frameworks */,
+				B620267D16787076004F3873 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = ColorArt;
-			productName = ColorArt;
-			productReference = 18DFE51516697F1500792C2E /* ColorArt.app */;
+			productName = ColorArtiOS;
+			productReference = B620267F16787076004F3873 /* ColorArt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		18DFE50C16697F1500792C2E /* Project object */ = {
+		B620267616787076004F3873 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = CA;
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Wade Cosgrove";
+				ORGANIZATIONNAME = "Fred Leitz";
 			};
-			buildConfigurationList = 18DFE50F16697F1500792C2E /* Build configuration list for PBXProject "ColorArt" */;
+			buildConfigurationList = B620267916787076004F3873 /* Build configuration list for PBXProject "ColorArt" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 18DFE50A16697F1500792C2E;
-			productRefGroup = 18DFE51616697F1500792C2E /* Products */;
+			mainGroup = B620267416787076004F3873;
+			productRefGroup = B620268016787076004F3873 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				18DFE51416697F1500792C2E /* ColorArt */,
+				B620267E16787076004F3873 /* ColorArt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		18DFE51316697F1500792C2E /* Resources */ = {
+		B620267D16787076004F3873 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */,
-				18DFE52A16697F1500792C2E /* Credits.rtf in Resources */,
-				18DFE53016697F1600792C2E /* MainMenu.xib in Resources */,
+				B62026E816788B34004F3873 /* Beatles-Abbey-Road-album.jpg in Resources */,
+				B62026EB16788B34004F3873 /* CAViewController.xib in Resources */,
+				B62026EC16788B34004F3873 /* ColorArt-Info.plist in Resources */,
+				B62026ED16788B34004F3873 /* Default-568h@2x.png in Resources */,
+				B62026EE16788B34004F3873 /* Default.png in Resources */,
+				B62026EF16788B34004F3873 /* Default@2x.png in Resources */,
+				B62026F016788B34004F3873 /* DSC_0062.jpg in Resources */,
+				B62026F116788B34004F3873 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		18DFE51116697F1500792C2E /* Sources */ = {
+		B620267B16787076004F3873 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DFE52616697F1500792C2E /* main.m in Sources */,
-				18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */,
-				1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */,
-				93FE707B1677DE9300BE484D /* SLColorArt.m in Sources */,
+				B62026E916788B34004F3873 /* CAAppDelegate.m in Sources */,
+				B62026EA16788B34004F3873 /* CAViewController.m in Sources */,
+				B62026F216788B34004F3873 /* LBGradient.m in Sources */,
+				B62026F316788B34004F3873 /* main.m in Sources */,
+				B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */,
+				B62026F516788B34004F3873 /* SLColorArt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		18DFE52216697F1500792C2E /* InfoPlist.strings */ = {
+		B62026DF16788B34004F3873 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				18DFE52316697F1500792C2E /* en */,
+				B62026E016788B34004F3873 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		18DFE52816697F1500792C2E /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18DFE52916697F1500792C2E /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		18DFE52E16697F1600792C2E /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18DFE52F16697F1600792C2E /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		18DFE53116697F1600792C2E /* Debug */ = {
+		B620269B16787076004F3873 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
-		18DFE53216697F1600792C2E /* Release */ = {
+		B620269C16787076004F3873 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		18DFE53416697F1600792C2E /* Debug */ = {
+		B620269E16787076004F3873 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
 				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ColorArt;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		18DFE53516697F1600792C2E /* Release */ = {
+		B620269F16787076004F3873 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
 				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ColorArt;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -293,25 +303,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		18DFE50F16697F1500792C2E /* Build configuration list for PBXProject "ColorArt" */ = {
+		B620267916787076004F3873 /* Build configuration list for PBXProject "ColorArt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				18DFE53116697F1600792C2E /* Debug */,
-				18DFE53216697F1600792C2E /* Release */,
+				B620269B16787076004F3873 /* Debug */,
+				B620269C16787076004F3873 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18DFE53316697F1600792C2E /* Build configuration list for PBXNativeTarget "ColorArt" */ = {
+		B620269D16787076004F3873 /* Build configuration list for PBXNativeTarget "ColorArt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				18DFE53416697F1600792C2E /* Debug */,
-				18DFE53516697F1600792C2E /* Release */,
+				B620269E16787076004F3873 /* Debug */,
+				B620269F16787076004F3873 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 18DFE50C16697F1500792C2E /* Project object */;
+	rootObject = B620267616787076004F3873 /* Project object */;
 }

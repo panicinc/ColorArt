@@ -1,14 +1,18 @@
 //
 //  main.m
-//  ColorArt
+//  ColorArtiOS
 //
-//  Created by Wade Cosgrove on 11/30/12.
-//  Copyright (c) 2012 Wade Cosgrove. All rights reserved.
+//  Created by Fred Leitz on 2012-12-11.
+//  Copyright (c) 2012 Fred Leitz. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <UIKit/UIKit.h>
+
+#import "CAAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
-	return NSApplicationMain(argc, (const char **)argv);
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([CAAppDelegate class]));
+    }
 }

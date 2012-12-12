@@ -16,13 +16,13 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface SLColorArt : NSObject
-@property(copy, readonly) NSColor *backgroundColor;
-@property(copy, readonly) NSColor *primaryColor;
-@property(copy, readonly) NSColor *secondaryColor;
-@property(copy, readonly) NSColor *detailColor;
-@property(nonatomic, copy) NSImage *scaledImage;
+@property(copy, readonly) UIColor *backgroundColor;
+@property(copy, readonly) UIColor *primaryColor;
+@property(copy, readonly) UIColor *secondaryColor;
+@property(copy, readonly) UIColor *detailColor;
+@property(nonatomic, copy) UIImage *scaledImage;
 
-- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size;
+- (id)initWithImage:(UIImage*)image scaledSize:(CGSize)size;
 @end
