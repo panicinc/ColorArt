@@ -43,7 +43,7 @@
                 self.window.backgroundColor = colorArt.backgroundColor;
                 self.primaryField.textColor = colorArt.primaryColor;
                 self.secondaryField.textColor = colorArt.secondaryColor;
-                self.secondary1Field.textColor = colorArt.detailColor;
+                self.detailField.textColor = colorArt.detailColor;
 			}
 		}
 	}];

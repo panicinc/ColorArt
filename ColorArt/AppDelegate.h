@@ -20,5 +20,5 @@
 @property (weak) IBOutlet NSImageView *imageView;
 @property (weak) IBOutlet NSTextField *primaryField;
 @property (weak) IBOutlet NSTextField *secondaryField;
-@property (weak) IBOutlet NSTextField *secondary1Field;
+@property (weak) IBOutlet NSTextField *detailField;
 @end

@@ -19,11 +19,6 @@
 
 #define kColorThresholdMinimumPercentage 0.01
 
-#define kAnalyzedBackgroundColor @"kAnalyzedBackgroundColor"
-#define kAnalyzedPrimaryColor @"kAnalyzedPrimaryColor"
-#define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
-#define kAnalyzedDetailColor @"kAnalyzedDetailColor"
-
 @interface NSColor (DarkAddition)
 
 - (BOOL)pc_isDarkColor;
@@ -44,14 +39,16 @@
 
 @end
 
+
 @interface SLColorArt ()
-@property(nonatomic, copy) NSImage *image;
+
 @property NSSize scaledSize;
-@property(copy,readwrite) NSColor *backgroundColor;
-@property(copy,readwrite) NSColor *primaryColor;
-@property(copy,readwrite) NSColor *secondaryColor;
-@property(copy,readwrite) NSColor *detailColor;
+@property(retain,readwrite) NSColor *backgroundColor;
+@property(retain,readwrite) NSColor *primaryColor;
+@property(retain,readwrite) NSColor *secondaryColor;
+@property(retain,readwrite) NSColor *detailColor;
 @end
+
 
 @implementation SLColorArt
 
@@ -61,32 +58,19 @@
 
     if (self)
     {
-        int x = 3;
-
-        
-        self.image = image;
         self.scaledSize = size;
-        [self _processImage];
+		
+		NSImage *finalImage = [self scaleImage:image size:size];
+		self.scaledImage = finalImage;
+		
+		[self analyzeImage:image];
     }
 
     return self;
 }
 
-- (void)_processImage
-{
-    NSImage *finalImage = [self _scaleImage:self.image size:self.scaledSize];
 
-    NSDictionary *colors = [self _analyzeImage:self.image];
-
-    self.backgroundColor = [colors objectForKey:kAnalyzedBackgroundColor];
-    self.primaryColor = [colors objectForKey:kAnalyzedPrimaryColor];
-    self.secondaryColor = [colors objectForKey:kAnalyzedSecondaryColor];
-    self.detailColor = [colors objectForKey:kAnalyzedDetailColor];
-
-    self.scaledImage = finalImage;
-}
-
-- (NSImage*)_scaleImage:(NSImage*)image size:(NSSize)scaledSize
+- (NSImage*)scaleImage:(NSImage*)image size:(NSSize)scaledSize
 {
     NSSize imageSize = [image size];
     NSImage *squareImage = [[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)];
@@ -122,16 +106,16 @@
     return finalImage;
 }
 
-- (NSDictionary*)_analyzeImage:(NSImage*)anImage
+- (void)analyzeImage:(NSImage*)anImage
 {
     NSCountedSet *imageColors = nil;
-	NSColor *backgroundColor = [self _findEdgeColor:anImage imageColors:&imageColors];
+	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors];
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
 	NSColor *detailColor = nil;
 	BOOL darkBackground = [backgroundColor pc_isDarkColor];
 
-	[self _findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
+	[self findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
 
 	if ( primaryColor == nil )
 	{
@@ -160,17 +144,13 @@
 			detailColor = [NSColor blackColor];
 	}
 
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:4];
-    [dict setObject:backgroundColor forKey:kAnalyzedBackgroundColor];
-    [dict setObject:primaryColor forKey:kAnalyzedPrimaryColor];
-    [dict setObject:secondaryColor forKey:kAnalyzedSecondaryColor];
-    [dict setObject:detailColor forKey:kAnalyzedDetailColor];
-
-
-    return [NSDictionary dictionaryWithDictionary:dict];
+    self.backgroundColor = backgroundColor;
+    self.primaryColor = primaryColor;
+	self.secondaryColor = secondaryColor;
+    self.detailColor = detailColor;
 }
 
-- (NSColor*)_findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors
+- (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors
 {
 	NSBitmapImageRep *imageRep = [[image representations] lastObject];
 
@@ -209,7 +189,7 @@
 	{
 		NSUInteger colorCount = [leftEdgeColors countForObject:curColor];
 
-        int randomColorsThreshold = (int) (pixelsHigh * kColorThresholdMinimumPercentage);
+        NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
         
 		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
 			continue;
@@ -234,7 +214,7 @@
 			{
 				PCCountedColor *nextProposedColor = [sortedColors objectAtIndex:i];
 
-				if (((double)nextProposedColor.count / (double)proposedEdgeColor.count) > .4 ) // make sure the second choice color is 40% as common as the first choice
+				if (((double)nextProposedColor.count / (double)proposedEdgeColor.count) > .3 ) // make sure the second choice color is 30% as common as the first choice
 				{
 					if ( ![nextProposedColor.color pc_isBlackOrWhite] )
 					{
@@ -255,7 +235,7 @@
 }
 
 
-- (void)_findTextColors:(NSCountedSet*)colors primaryColor:(NSColor**)primaryColor secondaryColor:(NSColor**)secondaryColor detailColor:(NSColor**)detailColor backgroundColor:(NSColor*)backgroundColor
+- (void)findTextColors:(NSCountedSet*)colors primaryColor:(NSColor**)primaryColor secondaryColor:(NSColor**)secondaryColor detailColor:(NSColor**)detailColor backgroundColor:(NSColor*)backgroundColor
 {
 	NSEnumerator *enumerator = [colors objectEnumerator];
 	NSColor *curColor = nil;
@@ -309,6 +289,7 @@
 }
 
 @end
+
 
 @implementation NSColor (DarkAddition)
 
@@ -429,7 +410,7 @@
 		else
 			contrast = (fLum + 0.05) / (bLum + 0.05);
 
-		//return contrast > 3.0; //3-4.5
+		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
 		return contrast > 1.6;
 	}
 
