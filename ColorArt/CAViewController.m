@@ -28,7 +28,9 @@
 {
     [super viewDidLoad];
     UIImage *image = [UIImage imageNamed:@"DSC_0062.jpg"];
-    SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:self.fadedImageView.frame.size];
+    SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize: self.fadedImageView.frame.size];
+    CGRect f = self.fadedImageView.frame;
+    f.size = colorArt.scaledImage.size;
     self.fadedImageView.backgroundColor = colorArt.backgroundColor;
     self.fadedImageView.image = colorArt.scaledImage;
     self.view.backgroundColor = colorArt.backgroundColor;
