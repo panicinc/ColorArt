@@ -25,6 +25,7 @@
 		B62026F316788B34004F3873 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E316788B34004F3873 /* main.m */; };
 		B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E516788B34004F3873 /* PCFadedImageView.m */; };
 		B62026F516788B34004F3873 /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E716788B34004F3873 /* SLColorArt.m */; };
+		B63779D416799A1400E79BFE /* ColorArt.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B63779D316799A1400E79BFE /* ColorArt.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		B62026E516788B34004F3873 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
 		B62026E616788B34004F3873 /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
 		B62026E716788B34004F3873 /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
+		B63779D316799A1400E79BFE /* ColorArt.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ColorArt.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 		B620267416787076004F3873 = {
 			isa = PBXGroup;
 			children = (
+				B63779D316799A1400E79BFE /* ColorArt.podspec */,
 				B62026D216788B34004F3873 /* ColorArt */,
 				B620268216787076004F3873 /* Frameworks */,
 				B620268016787076004F3873 /* Products */,
@@ -193,6 +196,7 @@
 				B62026EF16788B34004F3873 /* Default@2x.png in Resources */,
 				B62026F016788B34004F3873 /* DSC_0062.jpg in Resources */,
 				B62026F116788B34004F3873 /* InfoPlist.strings in Resources */,
+				B63779D416799A1400E79BFE /* ColorArt.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +288,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
 				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = ColorArt;
 				WRAPPER_EXTENSION = app;
 			};
@@ -295,6 +300,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ColorArt/ColorArt-Prefix.pch";
 				INFOPLIST_FILE = "ColorArt/ColorArt-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = ColorArt;
 				WRAPPER_EXTENSION = app;
 			};
@@ -319,6 +325,7 @@
 				B620269F16787076004F3873 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

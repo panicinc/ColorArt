@@ -60,10 +60,10 @@
 @interface SLColorArt ()
 @property(nonatomic, copy) UIImage *image;
 @property CGSize scaledSize;
-@property(copy,readwrite) UIColor *backgroundColor;
-@property(copy,readwrite) UIColor *primaryColor;
-@property(copy,readwrite) UIColor *secondaryColor;
-@property(copy,readwrite) UIColor *detailColor;
+@property(nonatomic,readwrite,strong) UIColor *backgroundColor;
+@property(nonatomic,readwrite,strong) UIColor *primaryColor;
+@property(nonatomic,readwrite,strong) UIColor *secondaryColor;
+@property(nonatomic,readwrite,strong) UIColor *detailColor;
 @end
 
 @implementation SLColorArt

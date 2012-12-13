@@ -18,10 +18,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface SLColorArt : NSObject
-@property(copy, readonly) UIColor *backgroundColor;
-@property(copy, readonly) UIColor *primaryColor;
-@property(copy, readonly) UIColor *secondaryColor;
-@property(copy, readonly) UIColor *detailColor;
+@property(strong, nonatomic, readonly) UIColor *backgroundColor;
+@property(strong, nonatomic, readonly) UIColor *primaryColor;
+@property(strong, nonatomic, readonly) UIColor *secondaryColor;
+@property(strong, nonatomic, readonly) UIColor *detailColor;
 @property(nonatomic, copy) UIImage *scaledImage;
 
 - (id)initWithImage:(UIImage*)image scaledSize:(CGSize)size;
