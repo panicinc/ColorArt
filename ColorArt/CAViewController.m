@@ -27,10 +27,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *image = [UIImage imageNamed:@"Beatles-Abbey-Road-album.jpg"];
+    UIImage *image = [UIImage imageNamed:@"DSC_0062.jpg"];
     SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:self.fadedImageView.frame.size];
     
     self.fadedImageView.image = colorArt.scaledImage;
+    self.fadedImageView.backgroundColor = colorArt.backgroundColor;
     self.view.backgroundColor = colorArt.backgroundColor;
     self.headline.textColor = colorArt.primaryColor;
     self.subHeadline.textColor = colorArt.secondaryColor;

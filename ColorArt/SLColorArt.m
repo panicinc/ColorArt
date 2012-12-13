@@ -208,7 +208,7 @@ typedef struct RGBPixel {
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
 		{
             RGBPixel px = imageData[x*y+y];
-            UIColor *color = [UIColor colorWithRed:px.red green:px.green blue:px.blue alpha:1.0];
+            UIColor *color = [UIColor colorWithRed:((CGFloat)px.red)/255.0 green:((CGFloat)px.green)/255.0 blue:((CGFloat)px.blue)/255.0 alpha:1.0];
 
 			if ( x == 0 )
 			{
