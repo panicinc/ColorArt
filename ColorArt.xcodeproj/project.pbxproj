@@ -23,7 +23,6 @@
 		B62026F116788B34004F3873 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62026DF16788B34004F3873 /* InfoPlist.strings */; };
 		B62026F316788B34004F3873 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E316788B34004F3873 /* main.m */; };
 		B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E516788B34004F3873 /* PCFadedImageView.m */; };
-		B63779D416799A1400E79BFE /* ColorArt.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B63779D316799A1400E79BFE /* ColorArt.podspec */; };
 		B63779DC16799D4200E79BFE /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779DA16799D4200E79BFE /* SLColorArt.m */; };
 		B63779DF16799D7E00E79BFE /* LBGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779DE16799D7E00E79BFE /* LBGradient.m */; };
 /* End PBXBuildFile section */
@@ -204,7 +203,6 @@
 				B62026EF16788B34004F3873 /* Default@2x.png in Resources */,
 				B62026F016788B34004F3873 /* DSC_0062.jpg in Resources */,
 				B62026F116788B34004F3873 /* InfoPlist.strings in Resources */,
-				B63779D416799A1400E79BFE /* ColorArt.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
