@@ -21,11 +21,11 @@
 		B62026EF16788B34004F3873 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B62026DD16788B34004F3873 /* Default@2x.png */; };
 		B62026F016788B34004F3873 /* DSC_0062.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B62026DE16788B34004F3873 /* DSC_0062.jpg */; };
 		B62026F116788B34004F3873 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62026DF16788B34004F3873 /* InfoPlist.strings */; };
-		B62026F216788B34004F3873 /* LBGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E216788B34004F3873 /* LBGradient.m */; };
 		B62026F316788B34004F3873 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E316788B34004F3873 /* main.m */; };
 		B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E516788B34004F3873 /* PCFadedImageView.m */; };
-		B62026F516788B34004F3873 /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E716788B34004F3873 /* SLColorArt.m */; };
 		B63779D416799A1400E79BFE /* ColorArt.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B63779D316799A1400E79BFE /* ColorArt.podspec */; };
+		B63779DB16799D4200E79BFE /* LBGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779D816799D4200E79BFE /* LBGradient.m */; };
+		B63779DC16799D4200E79BFE /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779DA16799D4200E79BFE /* SLColorArt.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,14 +47,14 @@
 		B62026DD16788B34004F3873 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B62026DE16788B34004F3873 /* DSC_0062.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DSC_0062.jpg; sourceTree = "<group>"; };
 		B62026E016788B34004F3873 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B62026E116788B34004F3873 /* LBGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBGradient.h; sourceTree = "<group>"; };
-		B62026E216788B34004F3873 /* LBGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBGradient.m; sourceTree = "<group>"; };
 		B62026E316788B34004F3873 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B62026E416788B34004F3873 /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
 		B62026E516788B34004F3873 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
-		B62026E616788B34004F3873 /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
-		B62026E716788B34004F3873 /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
 		B63779D316799A1400E79BFE /* ColorArt.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ColorArt.podspec; sourceTree = "<group>"; };
+		B63779D716799D4200E79BFE /* LBGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBGradient.h; sourceTree = "<group>"; };
+		B63779D816799D4200E79BFE /* LBGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBGradient.m; sourceTree = "<group>"; };
+		B63779D916799D4200E79BFE /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
+		B63779DA16799D4200E79BFE /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,18 +104,15 @@
 		B62026D216788B34004F3873 /* ColorArt */ = {
 			isa = PBXGroup;
 			children = (
+				B63779D616799D4200E79BFE /* Classes */,
 				B62026F616788B53004F3873 /* Supporting Files */,
 				B62026D416788B34004F3873 /* CAAppDelegate.h */,
 				B62026D516788B34004F3873 /* CAAppDelegate.m */,
 				B62026D616788B34004F3873 /* CAViewController.h */,
 				B62026D716788B34004F3873 /* CAViewController.m */,
 				B62026D816788B34004F3873 /* CAViewController.xib */,
-				B62026E116788B34004F3873 /* LBGradient.h */,
-				B62026E216788B34004F3873 /* LBGradient.m */,
 				B62026E416788B34004F3873 /* PCFadedImageView.h */,
 				B62026E516788B34004F3873 /* PCFadedImageView.m */,
-				B62026E616788B34004F3873 /* SLColorArt.h */,
-				B62026E716788B34004F3873 /* SLColorArt.m */,
 			);
 			path = ColorArt;
 			sourceTree = "<group>";
@@ -134,6 +131,17 @@
 				B62026DF16788B34004F3873 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B63779D616799D4200E79BFE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B63779D716799D4200E79BFE /* LBGradient.h */,
+				B63779D816799D4200E79BFE /* LBGradient.m */,
+				B63779D916799D4200E79BFE /* SLColorArt.h */,
+				B63779DA16799D4200E79BFE /* SLColorArt.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,10 +217,10 @@
 			files = (
 				B62026E916788B34004F3873 /* CAAppDelegate.m in Sources */,
 				B62026EA16788B34004F3873 /* CAViewController.m in Sources */,
-				B62026F216788B34004F3873 /* LBGradient.m in Sources */,
 				B62026F316788B34004F3873 /* main.m in Sources */,
 				B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */,
-				B62026F516788B34004F3873 /* SLColorArt.m in Sources */,
+				B63779DB16799D4200E79BFE /* LBGradient.m in Sources */,
+				B63779DC16799D4200E79BFE /* SLColorArt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
