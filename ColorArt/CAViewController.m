@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     self.imagePicker = [[UIImagePickerController alloc] init];
-    
+    self.imagePicker.delegate = self;
     UIImage *image = [UIImage imageNamed:@"Beatles-Abbey-Road-album.jpg"];
     //    UIImage *image = [UIImage imageNamed:@"DSC_0062.jpg"];
     
