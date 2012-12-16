@@ -25,6 +25,7 @@
 		B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B62026E516788B34004F3873 /* PCFadedImageView.m */; };
 		B63779DC16799D4200E79BFE /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779DA16799D4200E79BFE /* SLColorArt.m */; };
 		B63779DF16799D7E00E79BFE /* LBGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B63779DE16799D7E00E79BFE /* LBGradient.m */; };
+		B6CDCAA5167D6F5700A8D642 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CDCAA4167D6F5700A8D642 /* UIImage+Scale.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,8 @@
 		B63779DA16799D4200E79BFE /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
 		B63779DD16799D7E00E79BFE /* LBGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBGradient.h; sourceTree = "<group>"; };
 		B63779DE16799D7E00E79BFE /* LBGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBGradient.m; sourceTree = "<group>"; };
+		B6CDCAA3167D6F5700A8D642 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
+		B6CDCAA4167D6F5700A8D642 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +142,8 @@
 			children = (
 				B63779D916799D4200E79BFE /* SLColorArt.h */,
 				B63779DA16799D4200E79BFE /* SLColorArt.m */,
+				B6CDCAA3167D6F5700A8D642 /* UIImage+Scale.h */,
+				B6CDCAA4167D6F5700A8D642 /* UIImage+Scale.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				B62026F416788B34004F3873 /* PCFadedImageView.m in Sources */,
 				B63779DC16799D4200E79BFE /* SLColorArt.m in Sources */,
 				B63779DF16799D7E00E79BFE /* LBGradient.m in Sources */,
+				B6CDCAA5167D6F5700A8D642 /* UIImage+Scale.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +255,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PCFadedImageView.h"
-@interface CAViewController : UIViewController
+@interface CAViewController : UIViewController<UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet PCFadedImageView *fadedImageView;
+@property (strong, nonatomic) UIImagePickerController* imagePicker;
 @property (weak, nonatomic) IBOutlet UILabel *headline;
 @property (weak, nonatomic) IBOutlet UILabel *subHeadline;
 @property (weak, nonatomic) IBOutlet UILabel *text;

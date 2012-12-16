@@ -16,25 +16,14 @@
 
 
 #import "SLColorArt.h"
-
+#import "UIImage+Scale.h"
 #define kAnalyzedBackgroundColor @"kAnalyzedBackgroundColor"
 #define kAnalyzedPrimaryColor @"kAnalyzedPrimaryColor"
 #define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
 #define kAnalyzedDetailColor @"kAnalyzedDetailColor"
 
-@interface UIImage (Scale)
-- (UIImage*) scaledToSize:(CGSize)newSize;
-@end
-@implementation UIImage (Scale)
-- (UIImage*) scaledToSize:(CGSize)newSize {
-    UIGraphicsBeginImageContext(newSize);
-    [self drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 
-@end
+
 @interface UIColor (DarkAddition)
 
 - (BOOL)pc_isDarkColor;
@@ -177,13 +166,14 @@
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 
-typedef struct RGBPixel {
+typedef struct RGBAPixel
+{
+    Byte red;
+    Byte green;
+    Byte blue;
+    Byte alpha;
     
-    Byte    red;
-    Byte    green;
-    Byte    blue;
-    
-}   RGBPixel;
+} RGBAPixel;
 
 - (UIColor*)_findEdgeColor:(UIImage*)image imageColors:(NSCountedSet**)colors
 {
@@ -191,42 +181,41 @@ typedef struct RGBPixel {
 
 //	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) // sanity check
 //		return nil;
+    NSInteger width = CGImageGetWidth(imageRep);// [imageRep pixelsWide];
+	NSInteger height = CGImageGetHeight(imageRep); //[imageRep pixelsHigh];
 
-	NSInteger pixelsWide = CGImageGetWidth(imageRep);// [imageRep pixelsWide];
-	NSInteger pixelsHigh = CGImageGetHeight(imageRep); //[imageRep pixelsHigh];
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bmContext = CGBitmapContextCreate(NULL, width, height, 8, 4 * width, cs, kCGImageAlphaNoneSkipLast);
+    CGContextDrawImage(bmContext, (CGRect){.origin.x = 0.0f, .origin.y = 0.0f, .size.width = width, .size.height = height}, image.CGImage);
+    CGColorSpaceRelease(cs);
+    NSCountedSet* imageColors = [[NSCountedSet alloc] initWithCapacity:width * height];
+    NSCountedSet* edgeColors = [[NSCountedSet alloc] initWithCapacity:height];
+    const RGBAPixel* pixels = (const RGBAPixel*)CGBitmapContextGetData(bmContext);
+    for (NSUInteger y = 0; y < height; y++)
+    {
+        for (NSUInteger x = 0; x < width; x++)
+        {
+            const NSUInteger index = x + y * width;
+            RGBAPixel pixel = pixels[index];
+            UIColor* color = [[UIColor alloc] initWithRed:((CGFloat)pixel.red / 255.0f) green:((CGFloat)pixel.green / 255.0f) blue:((CGFloat)pixel.blue / 255.0f) alpha:1.0f];
+            if (0 == x)
+                [edgeColors addObject:color];
+            [imageColors addObject:color];
+        }
+    }
+    CGContextRelease(bmContext);
 
-	NSCountedSet *imageColors = [[NSCountedSet alloc] initWithCapacity:pixelsWide * pixelsHigh];
-	NSCountedSet *leftEdgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
-    CGDataProviderRef provider = CGImageGetDataProvider(imageRep);
-    CFDataRef bitmapData = CGDataProviderCopyData(provider);
-    const RGBPixel* imageData = (const RGBPixel*)CFDataGetBytePtr(bitmapData);
-    
-	for ( NSUInteger x = 0; x < pixelsWide; x++ )
-	{
-		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
-		{
-            RGBPixel px = imageData[x*y+y];
-            UIColor *color = [UIColor colorWithRed:((CGFloat)px.red)/255.0 green:((CGFloat)px.green)/255.0 blue:((CGFloat)px.blue)/255.0 alpha:1.0];
-
-			if ( x == 0 )
-			{
-				[leftEdgeColors addObject:color];
-			}
-
-			[imageColors addObject:color];
-		}
-	}
 
 	*colors = imageColors;
 
 
-	NSEnumerator *enumerator = [leftEdgeColors objectEnumerator];
+	NSEnumerator *enumerator = [edgeColors objectEnumerator];
 	UIColor *curColor = nil;
-	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[leftEdgeColors count]];
+	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[edgeColors count]];
 
 	while ( (curColor = [enumerator nextObject]) != nil )
 	{
-		NSUInteger colorCount = [leftEdgeColors countForObject:curColor];
+		NSUInteger colorCount = [edgeColors countForObject:curColor];
 
 		if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
 			continue;
