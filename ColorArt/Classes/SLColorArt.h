@@ -22,7 +22,6 @@
 @property(strong, nonatomic, readonly) UIColor *primaryColor;
 @property(strong, nonatomic, readonly) UIColor *secondaryColor;
 @property(strong, nonatomic, readonly) UIColor *detailColor;
-@property(nonatomic, copy) UIImage *scaledImage;
 
-- (id)initWithImage:(UIImage*)image scaledSize:(CGSize)size;
+- (id)initWithImage:(UIImage*)image;
 @end

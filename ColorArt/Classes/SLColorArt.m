@@ -46,7 +46,6 @@
 
 @interface SLColorArt ()
 @property(nonatomic, copy) UIImage *image;
-@property CGSize scaledSize;
 @property(nonatomic,readwrite,strong) UIColor *backgroundColor;
 @property(nonatomic,readwrite,strong) UIColor *primaryColor;
 @property(nonatomic,readwrite,strong) UIColor *secondaryColor;
@@ -55,14 +54,13 @@
 
 @implementation SLColorArt
 
-- (id)initWithImage:(UIImage*)image scaledSize:(CGSize)size
+- (id)initWithImage:(UIImage*)image
 {
     self = [super init];
 
     if (self)
     {
         self.image = image;
-        self.scaledSize = size;
         [self _processImage];
     }
 
@@ -71,7 +69,7 @@
 
 - (void)_processImage
 {
-    UIImage *finalImage = [self _scaleImage:self.image size:self.scaledSize];
+    //UIImage *finalImage = [self _scaleImage:self.image size:self.scaledSize];
 
     NSDictionary *colors = [self _analyzeImage:self.image];
 
@@ -80,7 +78,7 @@
     self.secondaryColor = [colors objectForKey:kAnalyzedSecondaryColor];
     self.detailColor = [colors objectForKey:kAnalyzedDetailColor];
 
-    self.scaledImage = finalImage;
+    //self.scaledImage = finalImage;
 }
 
 - (UIImage*)_scaleImage:(UIImage*)image size:(CGSize)scaledSize

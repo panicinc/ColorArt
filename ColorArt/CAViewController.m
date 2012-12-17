@@ -9,6 +9,7 @@
 #import "CAViewController.h"
 #import "SLColorArt.h"  
 #import "UIImage+Scale.h"
+#import "UIImage+ColorArt.h"
 @interface CAViewController ()
 
 @end
@@ -27,11 +28,9 @@
 - (void)colorizeForImage:(UIImage *)image
 {
     image = [image scaledToSize:self.fadedImageView.frame.size];
-    SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize: self.fadedImageView.frame.size];
-    CGRect f = self.fadedImageView.frame;
-    f.size = colorArt.scaledImage.size;
+    SLColorArt *colorArt = [image colorArt];
     self.fadedImageView.backgroundColor = colorArt.backgroundColor;
-    self.fadedImageView.image = colorArt.scaledImage;
+    self.fadedImageView.image = image;
     self.view.backgroundColor = colorArt.backgroundColor;
     self.headline.textColor = colorArt.primaryColor;
     self.subHeadline.textColor = colorArt.secondaryColor;
