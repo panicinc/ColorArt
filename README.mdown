@@ -41,8 +41,6 @@ The end result looks something like this:
 
 ![Screenshot](https://raw.github.com/aaronbrethorst/ColorArt/master/screenshot.png)
 
-<<<<<<< HEAD
-=======
 Credits
 ===
 
@@ -50,6 +48,7 @@ Credits
 * Aaron Brethorst (http://www.cocoacontrols.com) - "I extracted all of the interesting code into a reusable class whose usage should be fairly self-explanatory."
 * Fred Leitz - Port to iOS
 * Nyx0uf - iOS Pixel Algorithms
+
 License
 ===
 
