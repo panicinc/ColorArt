@@ -9,16 +9,14 @@ Usage
 ===
 
 ```   objective-c
-UIImage *image = [UIImage imageNamed:@"DSC_0062.jpg"];
-SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize: self.fadedImageView.frame.size];
-
-self.view.backgroundColor = colorArt.backgroundColor;
-self.fadedImageView.backgroundColor = colorArt.backgroundColor;
-
-self.fadedImageView.image = colorArt.scaledImage;
-self.headline.textColor = colorArt.primaryColor;
-self.subHeadline.textColor = colorArt.secondaryColor;
-self.text.textColor = colorArt.detailColor;
+    image = [image scaledToSize:self.fadedImageView.frame.size];
+    SLColorArt *colorArt = [image colorArt];
+    self.fadedImageView.backgroundColor = colorArt.backgroundColor;
+    self.fadedImageView.image = image;
+    self.view.backgroundColor = colorArt.backgroundColor;
+    self.headline.textColor = colorArt.primaryColor;
+    self.subHeadline.textColor = colorArt.secondaryColor;
+    self.text.textColor = colorArt.detailColor;
 ```
 
 
