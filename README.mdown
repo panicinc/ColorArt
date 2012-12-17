@@ -9,6 +9,8 @@ Usage
 ===
 
 ```   objective-c
+    #include <ColorArt/UIImage+ColorArt.h>
+
     image = [image scaledToSize:self.fadedImageView.frame.size];
     SLColorArt *colorArt = [image colorArt];
     self.fadedImageView.backgroundColor = colorArt.backgroundColor;
