@@ -24,5 +24,9 @@
 @property(retain, readonly) NSColor *detailColor;
 @property(nonatomic, copy) NSImage *scaledImage;
 
-- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size;
+- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size edge:(NSRectEdge)edge;
+@end
+
+@interface NSImage (Bitmaps)
+- (NSBitmapImageRep *)bitmapImageRepresentation;
 @end

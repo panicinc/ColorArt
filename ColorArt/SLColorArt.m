@@ -18,6 +18,7 @@
 #import "SLColorArt.h"
 
 #define kColorThresholdMinimumPercentage 0.01
+#define kAnalyzingSize NSMakeSize(64, 64)
 
 @interface NSColor (DarkAddition)
 
@@ -52,10 +53,10 @@
 
 @implementation SLColorArt
 
-- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size
+- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size edge:(NSRectEdge)edge
 {
     self = [super init];
-
+    
     if (self)
     {
         self.scaledSize = size;
@@ -63,9 +64,9 @@
 		NSImage *finalImage = [self scaleImage:image size:size];
 		self.scaledImage = finalImage;
 		
-		[self analyzeImage:image];
+		[self analyzeImage:[self scaleImage:image size:kAnalyzingSize] edge:edge];
     }
-
+    
     return self;
 }
 
@@ -76,7 +77,7 @@
     NSImage *squareImage = [[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)];
     NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
     NSRect drawRect;
-
+    
     // make the image square
     if ( imageSize.height > imageSize.width )
     {
@@ -86,19 +87,19 @@
     {
         drawRect = NSMakeRect(0, 0, imageSize.height, imageSize.height);
     }
-
+    
     [squareImage lockFocus];
     [image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.width) fromRect:drawRect operation:NSCompositeSourceOver fraction:1.0];
     [squareImage unlockFocus];
-
+    
     // scale the image to the desired size
-
+    
     [scaledImage lockFocus];
     [squareImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
     [scaledImage unlockFocus];
-
+    
     // convert back to readable bitmap data
-
+    
     CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
     NSImage *finalImage = [[NSImage alloc] initWithSize:scaledImage.size];
@@ -106,17 +107,17 @@
     return finalImage;
 }
 
-- (void)analyzeImage:(NSImage*)anImage
+- (void)analyzeImage:(NSImage*)anImage edge:(NSRectEdge)edge
 {
     NSCountedSet *imageColors = nil;
-	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors];
+	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors edge:edge];
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
 	NSColor *detailColor = nil;
 	BOOL darkBackground = [backgroundColor pc_isDarkColor];
-
+    
 	[self findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
-
+    
 	if ( primaryColor == nil )
 	{
 		NSLog(@"missed primary");
@@ -125,7 +126,7 @@
 		else
 			primaryColor = [NSColor blackColor];
 	}
-
+    
 	if ( secondaryColor == nil )
 	{
 		NSLog(@"missed secondary");
@@ -134,7 +135,7 @@
 		else
 			secondaryColor = [NSColor blackColor];
 	}
-
+    
 	if ( detailColor == nil )
 	{
 		NSLog(@"missed detail");
@@ -143,77 +144,104 @@
 		else
 			detailColor = [NSColor blackColor];
 	}
-
+    
     self.backgroundColor = backgroundColor;
     self.primaryColor = primaryColor;
 	self.secondaryColor = secondaryColor;
     self.detailColor = detailColor;
 }
 
-- (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors
+- (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors edge:(NSRectEdge)edge
 {
-	NSBitmapImageRep *imageRep = [[image representations] lastObject];
-
+	NSBitmapImageRep *imageRep = [image bitmapImageRepresentation];
+    
 	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) // sanity check
 		return nil;
-
+    
 	NSInteger pixelsWide = [imageRep pixelsWide];
 	NSInteger pixelsHigh = [imageRep pixelsHigh];
-
+    
 	NSCountedSet *imageColors = [[NSCountedSet alloc] initWithCapacity:pixelsWide * pixelsHigh];
-	NSCountedSet *leftEdgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
-
+	NSCountedSet *edgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
+    
 	for ( NSUInteger x = 0; x < pixelsWide; x++ )
 	{
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
 		{
 			NSColor *color = [imageRep colorAtX:x y:y];
-
-			if ( x == 0 )
-			{
-				[leftEdgeColors addObject:color];
-			}
-
+            
+            BOOL flag = NO;
+            
+            switch (edge) {
+                case NSMinXEdge:
+                {
+                    if (x == 0) flag = YES;
+                }
+                    break;
+                    
+                case NSMaxXEdge:
+                {
+                    if (x == (pixelsWide - 1)) flag = YES;
+                }
+                    break;
+                    
+                case NSMinYEdge:
+                {
+                    if (y == 0) flag = YES;
+                }
+                    break;
+                    
+                case NSMaxYEdge:
+                {
+                    if (y == (pixelsHigh - 1)) flag = YES;
+                }
+                    break;
+            }
+            
+            if (flag) {
+                [edgeColors addObject:color];
+            }
+			
 			[imageColors addObject:color];
 		}
 	}
-
+    
 	*colors = imageColors;
-
-
-	NSEnumerator *enumerator = [leftEdgeColors objectEnumerator];
+    
+    
+	NSEnumerator *enumerator = [edgeColors objectEnumerator];
 	NSColor *curColor = nil;
-	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[leftEdgeColors count]];
-
+	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[edgeColors count]];
+    
 	while ( (curColor = [enumerator nextObject]) != nil )
 	{
-		NSUInteger colorCount = [leftEdgeColors countForObject:curColor];
-
+		NSUInteger colorCount = [edgeColors countForObject:curColor];
+        
         NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
         
 		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
 			continue;
-
+        
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
-
+        
 		[sortedColors addObject:container];
 	}
-
+    
 	[sortedColors sortUsingSelector:@selector(compare:)];
-
-
+    
+    
 	PCCountedColor *proposedEdgeColor = nil;
-
+    
 	if ( [sortedColors count] > 0 )
 	{
 		proposedEdgeColor = [sortedColors objectAtIndex:0];
-
+        
 		if ( [proposedEdgeColor.color pc_isBlackOrWhite] ) // want to choose color over black/white so we keep looking
 		{
 			for ( NSInteger i = 1; i < [sortedColors count]; i++ )
 			{
 				PCCountedColor *nextProposedColor = [sortedColors objectAtIndex:i];
-
+                
 				if (((double)nextProposedColor.count / (double)proposedEdgeColor.count) > .3 ) // make sure the second choice color is 30% as common as the first choice
 				{
 					if ( ![nextProposedColor.color pc_isBlackOrWhite] )
@@ -230,7 +258,7 @@
 			}
 		}
 	}
-
+    
 	return proposedEdgeColor.color;
 }
 
@@ -241,30 +269,30 @@
 	NSColor *curColor = nil;
 	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[colors count]];
 	BOOL findDarkTextColor = ![backgroundColor pc_isDarkColor];
-
+    
 	while ( (curColor = [enumerator nextObject]) != nil )
 	{
 		curColor = [curColor pc_colorWithMinimumSaturation:.15];
-
+        
 		if ( [curColor pc_isDarkColor] == findDarkTextColor )
 		{
 			NSUInteger colorCount = [colors countForObject:curColor];
-
+            
 			//if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
 			//	continue;
-
+            
 			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
-
+            
 			[sortedColors addObject:container];
 		}
 	}
-
+    
 	[sortedColors sortUsingSelector:@selector(compare:)];
-
+    
 	for ( PCCountedColor *curContainer in sortedColors )
 	{
 		curColor = curContainer.color;
-
+        
 		if ( *primaryColor == nil )
 		{
 			if ( [curColor pc_isContrastingColor:backgroundColor] )
@@ -274,7 +302,7 @@
 		{
 			if ( ![*primaryColor pc_isDistinct:curColor] || ![curColor pc_isContrastingColor:backgroundColor] )
 				continue;
-
+            
 			*secondaryColor = curColor;
 		}
 		else if ( *detailColor == nil )
@@ -297,16 +325,16 @@
 {
 	NSColor *convertedColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	CGFloat r, g, b, a;
-
+    
 	[convertedColor getRed:&r green:&g blue:&b alpha:&a];
-
+    
 	CGFloat lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
+    
 	if ( lum < .5 )
 	{
 		return YES;
 	}
-
+    
 	return NO;
 }
 
@@ -317,28 +345,28 @@
 	NSColor *convertedCompareColor = [compareColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	CGFloat r, g, b, a;
 	CGFloat r1, g1, b1, a1;
-
+    
 	[convertedColor getRed:&r green:&g blue:&b alpha:&a];
 	[convertedCompareColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
-
+    
 	CGFloat threshold = .25; //.15
-
+    
 	if ( fabs(r - r1) > threshold ||
 		fabs(g - g1) > threshold ||
 		fabs(b - b1) > threshold ||
 		fabs(a - a1) > threshold )
     {
         // check for grays, prevent multiple gray colors
-
+        
         if ( fabs(r - g) < .03 && fabs(r - b) < .03 )
         {
             if ( fabs(r1 - g1) < .03 && fabs(r1 - b1) < .03 )
                 return NO;
         }
-
+        
         return YES;
     }
-
+    
 	return NO;
 }
 
@@ -346,22 +374,22 @@
 - (NSColor*)pc_colorWithMinimumSaturation:(CGFloat)minSaturation
 {
 	NSColor *tempColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-
+    
 	if ( tempColor != nil )
 	{
 		CGFloat hue = 0.0;
 		CGFloat saturation = 0.0;
 		CGFloat brightness = 0.0;
 		CGFloat alpha = 0.0;
-
+        
 		[tempColor getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
-
+        
 		if ( saturation < minSaturation )
 		{
 			return [NSColor colorWithCalibratedHue:hue saturation:minSaturation brightness:brightness alpha:alpha];
 		}
 	}
-
+    
 	return self;
 }
 
@@ -369,20 +397,20 @@
 - (BOOL)pc_isBlackOrWhite
 {
 	NSColor *tempColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-
+    
 	if ( tempColor != nil )
 	{
 		CGFloat r, g, b, a;
-
+        
 		[tempColor getRed:&r green:&g blue:&b alpha:&a];
-
+        
 		if ( r > .91 && g > .91 && b > .91 )
 			return YES; // white
-
+        
 		if ( r < .09 && g < .09 && b < .09 )
 			return YES; // black
 	}
-
+    
 	return NO;
 }
 
@@ -391,29 +419,29 @@
 {
 	NSColor *backgroundColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	NSColor *foregroundColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-
+    
 	if ( backgroundColor != nil && foregroundColor != nil )
 	{
 		CGFloat br, bg, bb, ba;
 		CGFloat fr, fg, fb, fa;
-
+        
 		[backgroundColor getRed:&br green:&bg blue:&bb alpha:&ba];
 		[foregroundColor getRed:&fr green:&fg blue:&fb alpha:&fa];
-
+        
 		CGFloat bLum = 0.2126 * br + 0.7152 * bg + 0.0722 * bb;
 		CGFloat fLum = 0.2126 * fr + 0.7152 * fg + 0.0722 * fb;
-
+        
 		CGFloat contrast = 0.;
-
+        
 		if ( bLum > fLum )
 			contrast = (bLum + 0.05) / (fLum + 0.05);
 		else
 			contrast = (fLum + 0.05) / (bLum + 0.05);
-
+        
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
 		return contrast > 1.6;
 	}
-
+    
 	return YES;
 }
 
@@ -426,13 +454,13 @@
 - (id)initWithColor:(NSColor*)color count:(NSUInteger)count
 {
 	self = [super init];
-
+    
 	if ( self )
 	{
 		self.color = color;
 		self.count = count;
 	}
-
+    
 	return self;
 }
 
@@ -455,3 +483,37 @@
 
 
 @end
+
+@implementation NSImage (Bitmaps)
+
+- (NSBitmapImageRep *)bitmapImageRepresentation {
+    int width = [self size].width;
+    int height = [self size].height;
+    
+    if(width < 1 || height < 1)
+        return nil;
+    
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes: NULL
+                             pixelsWide: width
+                             pixelsHigh: height
+                             bitsPerSample: 8
+                             samplesPerPixel: 4
+                             hasAlpha: YES
+                             isPlanar: NO
+                             colorSpaceName: NSDeviceRGBColorSpace
+                             bytesPerRow: width * 4
+                             bitsPerPixel: 32];
+    
+    NSGraphicsContext *ctx = [NSGraphicsContext graphicsContextWithBitmapImageRep: rep];
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext: ctx];
+    [self drawAtPoint: NSZeroPoint fromRect: NSZeroRect operation: NSCompositeCopy fraction: 1.0];
+    [ctx flushGraphics];
+    [NSGraphicsContext restoreGraphicsState];
+    
+    return rep;
+}
+
+@end
+
