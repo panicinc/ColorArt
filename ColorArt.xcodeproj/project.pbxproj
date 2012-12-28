@@ -7,19 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830D098166E810C00FFEBD5 /* PCFadedImageView.m */; };
 		18DFE51A16697F1500792C2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DFE51916697F1500792C2E /* Cocoa.framework */; };
 		18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52216697F1500792C2E /* InfoPlist.strings */; };
 		18DFE52616697F1500792C2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52516697F1500792C2E /* main.m */; };
 		18DFE52A16697F1500792C2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52816697F1500792C2E /* Credits.rtf */; };
-		18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE52C16697F1500792C2E /* AppDelegate.m */; };
-		18DFE53016697F1600792C2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DFE52E16697F1600792C2E /* MainMenu.xib */; };
+		91121771168E1813005D00BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9112176B168E1813005D00BD /* AppDelegate.m */; };
+		91121772168E1813005D00BD /* ITColorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9112176D168E1813005D00BD /* ITColorWindow.m */; };
+		91121773168E1813005D00BD /* PCFadedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9112176F168E1813005D00BD /* PCFadedImageView.m */; };
+		91121774168E1813005D00BD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91121770168E1813005D00BD /* MainMenu.xib */; };
 		93FE707B1677DE9300BE484D /* SLColorArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FE707A1677DE9300BE484D /* SLColorArt.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1830D097166E810C00FFEBD5 /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
-		1830D098166E810C00FFEBD5 /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
 		18DFE51516697F1500792C2E /* ColorArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18DFE51916697F1500792C2E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		18DFE51C16697F1500792C2E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -30,9 +29,13 @@
 		18DFE52516697F1500792C2E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18DFE52716697F1500792C2E /* ColorArt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColorArt-Prefix.pch"; sourceTree = "<group>"; };
 		18DFE52916697F1500792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		18DFE52B16697F1500792C2E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		18DFE52C16697F1500792C2E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		18DFE52F16697F1600792C2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9112176A168E1813005D00BD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9112176B168E1813005D00BD /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9112176C168E1813005D00BD /* ITColorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITColorWindow.h; sourceTree = "<group>"; };
+		9112176D168E1813005D00BD /* ITColorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITColorWindow.m; sourceTree = "<group>"; };
+		9112176E168E1813005D00BD /* PCFadedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFadedImageView.h; sourceTree = "<group>"; };
+		9112176F168E1813005D00BD /* PCFadedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFadedImageView.m; sourceTree = "<group>"; };
+		91121770168E1813005D00BD /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		93FE70791677DE9300BE484D /* SLColorArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLColorArt.h; sourceTree = "<group>"; };
 		93FE707A1677DE9300BE484D /* SLColorArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLColorArt.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,11 +91,13 @@
 		18DFE51F16697F1500792C2E /* ColorArt */ = {
 			isa = PBXGroup;
 			children = (
-				18DFE52B16697F1500792C2E /* AppDelegate.h */,
-				18DFE52C16697F1500792C2E /* AppDelegate.m */,
-				1830D097166E810C00FFEBD5 /* PCFadedImageView.h */,
-				1830D098166E810C00FFEBD5 /* PCFadedImageView.m */,
-				18DFE52E16697F1600792C2E /* MainMenu.xib */,
+				9112176A168E1813005D00BD /* AppDelegate.h */,
+				9112176B168E1813005D00BD /* AppDelegate.m */,
+				9112176C168E1813005D00BD /* ITColorWindow.h */,
+				9112176D168E1813005D00BD /* ITColorWindow.m */,
+				9112176E168E1813005D00BD /* PCFadedImageView.h */,
+				9112176F168E1813005D00BD /* PCFadedImageView.m */,
+				91121770168E1813005D00BD /* MainMenu.xib */,
 				18DFE52016697F1500792C2E /* Supporting Files */,
 				93FE70791677DE9300BE484D /* SLColorArt.h */,
 				93FE707A1677DE9300BE484D /* SLColorArt.m */,
@@ -165,7 +170,7 @@
 			files = (
 				18DFE52416697F1500792C2E /* InfoPlist.strings in Resources */,
 				18DFE52A16697F1500792C2E /* Credits.rtf in Resources */,
-				18DFE53016697F1600792C2E /* MainMenu.xib in Resources */,
+				91121774168E1813005D00BD /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,9 +182,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				18DFE52616697F1500792C2E /* main.m in Sources */,
-				18DFE52D16697F1500792C2E /* AppDelegate.m in Sources */,
-				1830D099166E810C00FFEBD5 /* PCFadedImageView.m in Sources */,
 				93FE707B1677DE9300BE484D /* SLColorArt.m in Sources */,
+				91121771168E1813005D00BD /* AppDelegate.m in Sources */,
+				91121772168E1813005D00BD /* ITColorWindow.m in Sources */,
+				91121773168E1813005D00BD /* PCFadedImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,14 +206,6 @@
 				18DFE52916697F1500792C2E /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		18DFE52E16697F1600792C2E /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18DFE52F16697F1600792C2E /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

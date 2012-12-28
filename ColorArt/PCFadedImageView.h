@@ -14,11 +14,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PCFadedImageView : NSView
-{
-	NSImage *_image;
-}
+@interface PCFadedImageView : NSImageView
 
-@property (strong) NSImage *image;
+@property NSRectEdge fadingEdge;
+@property BOOL fade;
 
 @end

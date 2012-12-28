@@ -18,9 +18,6 @@
 
 @implementation PCFadedImageView
 
-@synthesize image = _image;
-
-
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -30,12 +27,33 @@
 
 	[self.image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 
-	// lazy way to get fade color
-	NSColor *backgroundColor = [[self window] backgroundColor];
+	if (self.fade) {
+        // lazy way to get fade color
+        NSColor *backgroundColor = [[self window] backgroundColor];
 		
-	NSGradient *gradient = [[NSGradient alloc] initWithColorsAndLocations:backgroundColor, 0.0, backgroundColor, .01, [backgroundColor colorWithAlphaComponent:0.05], 1.0, nil];
-
-	[gradient drawInRect:imageRect angle:0.0];
+        NSGradient *gradient = [[NSGradient alloc] initWithColorsAndLocations:
+                                backgroundColor, 0.0,
+                                [backgroundColor colorWithAlphaComponent:0.0], 0.5, nil];
+        
+        float angle = 0;
+        
+        switch (self.fadingEdge) {
+            case NSMinXEdge:
+                angle = 0;
+                break;
+            case NSMinYEdge:
+                angle = 270;
+                break;
+            case NSMaxXEdge:
+                angle = 180;
+                break;
+            case NSMaxYEdge:
+                angle = 90;
+                break;
+        }
+        
+        [gradient drawInRect:imageRect angle:angle];
+    }
 }
 
 

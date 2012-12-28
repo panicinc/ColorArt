@@ -18,6 +18,7 @@
 #import "SLColorArt.h"
 
 #define kColorThresholdMinimumPercentage 0.01
+#define kColorThresholdMaximumercentageForFading 0.8
 #define kAnalyzingSize NSMakeSize(64, 64)
 
 @interface NSColor (DarkAddition)
@@ -110,7 +111,8 @@
 - (void)analyzeImage:(NSImage*)anImage edge:(NSRectEdge)edge
 {
     NSCountedSet *imageColors = nil;
-	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors edge:edge];
+    BOOL shouldFade;
+	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors edge:edge shouldFade:&shouldFade];
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
 	NSColor *detailColor = nil;
@@ -120,7 +122,6 @@
     
 	if ( primaryColor == nil )
 	{
-		NSLog(@"missed primary");
 		if ( darkBackground )
 			primaryColor = [NSColor whiteColor];
 		else
@@ -129,7 +130,6 @@
     
 	if ( secondaryColor == nil )
 	{
-		NSLog(@"missed secondary");
 		if ( darkBackground )
 			secondaryColor = [NSColor whiteColor];
 		else
@@ -138,7 +138,6 @@
     
 	if ( detailColor == nil )
 	{
-		NSLog(@"missed detail");
 		if ( darkBackground )
 			detailColor = [NSColor whiteColor];
 		else
@@ -149,9 +148,10 @@
     self.primaryColor = primaryColor;
 	self.secondaryColor = secondaryColor;
     self.detailColor = detailColor;
+    self.shouldFade = shouldFade;
 }
 
-- (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors edge:(NSRectEdge)edge
+- (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors edge:(NSRectEdge)edge shouldFade:(BOOL*)shouldFade
 {
 	NSBitmapImageRep *imageRep = [image bitmapImageRepresentation];
     
@@ -257,7 +257,15 @@
 				}
 			}
 		}
-	}
+    }
+    
+    // Check if the color needs to fade
+    double edgePixels = ((edge == NSMinXEdge) || (edge == NSMaxXEdge))?pixelsWide:pixelsHigh;
+    if ((double)proposedEdgeColor.count / edgePixels <= kColorThresholdMaximumercentageForFading) {
+        *shouldFade = YES;
+    } else {
+        *shouldFade = NO;
+    }
     
 	return proposedEdgeColor.color;
 }
