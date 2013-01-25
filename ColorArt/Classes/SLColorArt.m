@@ -50,21 +50,49 @@
 @property(nonatomic,readwrite,strong) UIColor *primaryColor;
 @property(nonatomic,readwrite,strong) UIColor *secondaryColor;
 @property(nonatomic,readwrite,strong) UIColor *detailColor;
+@property(nonatomic,readwrite) NSInteger randomColorThreshold;
 @end
 
 @implementation SLColorArt
 
 - (id)initWithImage:(UIImage*)image
 {
+    self = [self initWithImage:image threshold:2];
+    if (self) {
+
+    }
+    return self;
+}
+
+- (id)initWithImage:(UIImage*)image threshold:(NSInteger)threshold;
+{
     self = [super init];
 
     if (self)
     {
+        self.randomColorThreshold = threshold;
         self.image = image;
         [self _processImage];
     }
 
     return self;
+}
+
+
++ (void)processImage:(UIImage *)image
+        scaledToSize:(CGSize)scaleSize
+           threshold:(NSInteger)threshold
+          onComplete:(void (^)(SLColorArt *colorArt))completeBlock;
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *scaledImage = [image scaledToSize:scaleSize];
+        SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:scaledImage
+                                                       threshold:threshold];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completeBlock(colorArt);
+        });
+    });
+    
 }
 
 - (void)_processImage
@@ -215,7 +243,7 @@ typedef struct RGBAPixel
 	{
 		NSUInteger colorCount = [edgeColors countForObject:curColor];
 
-		if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
+		if ( colorCount <= self.randomColorThreshold ) // prevent using random colors, threshold should be based on input image size
 			continue;
 
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];

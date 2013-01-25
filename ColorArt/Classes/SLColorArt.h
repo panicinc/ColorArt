@@ -22,6 +22,14 @@
 @property(strong, nonatomic, readonly) UIColor *primaryColor;
 @property(strong, nonatomic, readonly) UIColor *secondaryColor;
 @property(strong, nonatomic, readonly) UIColor *detailColor;
+@property(nonatomic, readonly) NSInteger randomColorThreshold; // Default to 2
 
 - (id)initWithImage:(UIImage*)image;
+- (id)initWithImage:(UIImage*)image threshold:(NSInteger)threshold;
+
++ (void)processImage:(UIImage *)image
+        scaledToSize:(CGSize)scaleSize
+           threshold:(NSInteger)threshold
+          onComplete:(void (^)(SLColorArt *colorArt))completeBlock;
+
 @end
