@@ -151,6 +151,14 @@
 	UIColor *primaryColor = nil;
 	UIColor *secondaryColor = nil;
 	UIColor *detailColor = nil;
+    
+    // If the random color threshold is too high and the image size too small,
+    // we could miss detecting the background color and crash.
+    if ( backgroundColor == nil )
+    {
+        backgroundColor = [UIColor whiteColor];
+    }
+    
 	BOOL darkBackground = [backgroundColor pc_isDarkColor];
 
 	[self _findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
