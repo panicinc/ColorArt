@@ -15,38 +15,14 @@
 
 
 #import "AppDelegate.h"
-#import "SLColorArt.h"
 
 @implementation AppDelegate
 
-- (IBAction)chooseImage:(id)sender
-{
-	NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-	
-	[openPanel setCanChooseFiles:YES];
-	[openPanel setAllowsMultipleSelection:NO];
-	[openPanel setPrompt:@"Select"];
-	[openPanel setAllowedFileTypes:[NSImage imageTypes]];
-	
-	[openPanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result)
-	{
-		if ( result == NSFileHandlingPanelOKButton )
-		{
-			NSURL *url = [openPanel URL];
-			
-			NSImage *image = [[NSImage alloc] initByReferencingURL:url];
-			if ( image != nil )
-			{
-                SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:NSMakeSize(320., 320.)];
-
-                self.imageView.image = colorArt.scaledImage;
-                self.window.backgroundColor = colorArt.backgroundColor;
-                self.primaryField.textColor = colorArt.primaryColor;
-                self.secondaryField.textColor = colorArt.secondaryColor;
-                self.detailField.textColor = colorArt.detailColor;
-			}
-		}
-	}];
+- (void)awakeFromNib {
+    self.rightEdgeWindow.colorEdge = NSMaxXEdge;
+    self.leftEdgeWindow.colorEdge = NSMinXEdge;
+    self.topEdgeWindow.colorEdge = NSMinYEdge;
+    self.bottomEdgeWindow.colorEdge = NSMaxYEdge;
 }
 
 @end

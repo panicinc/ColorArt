@@ -23,6 +23,11 @@
 @property(retain, readonly) NSColor *secondaryColor;
 @property(retain, readonly) NSColor *detailColor;
 @property(nonatomic, copy) NSImage *scaledImage;
+@property BOOL shouldFade;
 
-- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size;
+- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size edge:(NSRectEdge)edge;
+@end
+
+@interface NSImage (Bitmaps)
+- (NSBitmapImageRep *)bitmapImageRepresentation;
 @end
