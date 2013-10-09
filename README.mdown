@@ -5,7 +5,7 @@ This morning, I saw a neat post on Panic's blog (http://www.panic.com/blog/2012/
 
 I  — Aaron Brethorst / http://www.cocoacontrols.com — have extracted all of the interesting code into a reusable class whose usage should be fairly self-explanatory. Let me know if you have any questions.
 
-![Screenshot](https://raw.github.com/aaronbrethorst/ColorArt/master/screenshot.png)
+![Screenshot](https://raw.github.com/7imbrook/ColorArt/master/screenshot.png)
 
 License
 ===

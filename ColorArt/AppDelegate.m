@@ -37,15 +37,20 @@
 			NSImage *image = [[NSImage alloc] initByReferencingURL:url];
 			if ( image != nil )
 			{
-                dispatch_queue_t async = dispatch_queue_create("com.colorart", DISPATCH_QUEUE_SERIAL);
-                dispatch_async(async, ^{
+//                [_progress setHidden:NO];
+                [_progress startAnimation:nil];
+                [[NSOperationQueue new] addOperationWithBlock:^{
                     SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:NSMakeSize(320., 320.)];
-                    self.imageView.image = colorArt.scaledImage;
-                    self.window.backgroundColor = colorArt.backgroundColor;
-                    self.primaryField.textColor = colorArt.primaryColor;
-                    self.secondaryField.textColor = colorArt.secondaryColor;
-                    self.detailField.textColor = colorArt.detailColor;
-                });
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        self.imageView.image = colorArt.scaledImage;
+                        self.window.backgroundColor = colorArt.backgroundColor;
+                        self.primaryField.textColor = colorArt.primaryColor;
+                        self.secondaryField.textColor = colorArt.secondaryColor;
+                        self.detailField.textColor = colorArt.detailColor;
+//                        [_progress setHidden:YES];
+                        [_progress stopAnimation:nil];
+                    }];
+                }];
 			}
 		}
 	}];
