@@ -21,4 +21,6 @@
 @property (weak) IBOutlet NSTextField *primaryField;
 @property (weak) IBOutlet NSTextField *secondaryField;
 @property (weak) IBOutlet NSTextField *detailField;
+@property (weak) IBOutlet NSProgressIndicator *progress;
+
 @end
