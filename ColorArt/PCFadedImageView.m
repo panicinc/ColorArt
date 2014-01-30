@@ -21,11 +21,11 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [super drawRect:dirtyRect];
+    
 	NSSize imageSize = [self.image size];
     NSRect bounds = self.bounds;
 	NSRect imageRect = NSMakeRect(bounds.size.width - imageSize.width, bounds.size.height - imageSize.height, imageSize.width, imageSize.height);
-
-	[self.image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 
 	if (self.fade) {
         // lazy way to get fade color

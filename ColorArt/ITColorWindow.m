@@ -25,16 +25,17 @@
          {
              NSURL *url = [openPanel URL];
              
-             NSImage *image = [[NSImage alloc] initByReferencingURL:url];
-             if ( image != nil )
+             self.image = [[NSImage alloc] initByReferencingURL:url];
+             if ( self.image != nil )
              {
-                 SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:image scaledSize:NSMakeSize(320., 320.) edge:self.colorEdge];
+                 SLColorArt *colorArt = [[SLColorArt alloc] initWithImage:self.image edge:self.colorEdge];
                  
-                 self.imageView.image = colorArt.scaledImage;
                  self.backgroundColor = colorArt.backgroundColor;
                  self.primaryField.textColor = colorArt.primaryColor;
                  self.secondaryField.textColor = colorArt.secondaryColor;
                  self.detailField.textColor = colorArt.detailColor;
+                 
+                 self.imageView.image = self.image;
                  self.imageView.fade = colorArt.shouldFade;
              }
          }

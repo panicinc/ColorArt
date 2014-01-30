@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSTextField *secondaryField;
 @property (weak) IBOutlet NSTextField *detailField;
 
+@property (strong) NSImage *image;
 @property NSRectEdge colorEdge;
 
 @end

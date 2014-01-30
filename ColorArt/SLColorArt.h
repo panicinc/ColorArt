@@ -17,17 +17,22 @@
 
 #import <Foundation/Foundation.h>
 
+@interface NSColor (DarkAddition)
+- (BOOL)pc_isDarkColor;
+- (BOOL)pc_isDistinct:(NSColor*)compareColor;
+- (NSColor *)pc_colorWithMinimumSaturation:(CGFloat)saturation;
+- (BOOL)pc_isBlackOrWhite;
+- (BOOL)pc_isContrastingColor:(NSColor*)color;
+@end
+
+
 @interface SLColorArt : NSObject
 @property(retain, readonly) NSColor *backgroundColor;
 @property(retain, readonly) NSColor *primaryColor;
 @property(retain, readonly) NSColor *secondaryColor;
 @property(retain, readonly) NSColor *detailColor;
-@property(nonatomic, copy) NSImage *scaledImage;
 @property BOOL shouldFade;
 
-- (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size edge:(NSRectEdge)edge;
-@end
+- (id)initWithImage:(NSImage *)image edge:(NSRectEdge)edge;
 
-@interface NSImage (Bitmaps)
-- (NSBitmapImageRep *)bitmapImageRepresentation;
 @end
