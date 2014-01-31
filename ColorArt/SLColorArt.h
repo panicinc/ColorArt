@@ -23,6 +23,7 @@
 - (NSColor *)pc_colorWithMinimumSaturation:(CGFloat)saturation;
 - (BOOL)pc_isBlackOrWhite;
 - (BOOL)pc_isContrastingColor:(NSColor*)color;
+- (CGFloat)pc_contrastOnBackgroundColor:(NSColor *)backgroundColor;
 @end
 
 

@@ -19,7 +19,8 @@
 
 #define kColorThresholdMinimumPercentage 0.01
 #define kColorThresholdMaximumercentageForFading 0.8
-#define kAnalyzingSize NSMakeSize(128, 128)
+#define kAnalyzingSize NSMakeSize(96, 96)
+#define kEdgeMargin kAnalyzingSize.width * 0.15625
 
 
 // ----------------------------------------------------
@@ -228,10 +229,23 @@
 			contrast = (fLum + 0.05) / (bLum + 0.05);
         
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
-		return contrast > 1.6;
+		return contrast > 3.0;
 	}
     
 	return YES;
+}
+
+- (CGFloat)pc_contrastOnBackgroundColor:(NSColor *)backgroundColor {
+    backgroundColor = [backgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	NSColor *foregroundColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    CGFloat br, bg, bb;
+    CGFloat fr, fg, fb;
+    
+    [backgroundColor getRed:&br green:&bg blue:&bb alpha:nil];
+    [foregroundColor getRed:&fr green:&fg blue:&fb alpha:nil];
+    
+    return fabs(br - fr) + fabs(bg - fg) + fabs(bb - fb);
 }
 
 
@@ -322,6 +336,7 @@
     NSCountedSet *imageColors = nil;
     BOOL shouldFade;
 	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors edge:edge shouldFade:&shouldFade];
+    
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
 	NSColor *detailColor = nil;
@@ -387,25 +402,25 @@
             switch (edge) {
                 case NSMinXEdge:
                 {
-                    if (x == 0) flag = YES;
+                    if (x < kEdgeMargin) flag = YES;
                 }
                     break;
                     
                 case NSMaxXEdge:
                 {
-                    if (x == (pixelsWide - 1)) flag = YES;
+                    if (x > (pixelsWide - kEdgeMargin)) flag = YES;
                 }
                     break;
                     
                 case NSMinYEdge:
                 {
-                    if (y == 0) flag = YES;
+                    if (y < kEdgeMargin) flag = YES;
                 }
                     break;
                     
                 case NSMaxYEdge:
                 {
-                    if (y == (pixelsHigh - 1)) flag = YES;
+                    if (y > (pixelsHigh - kEdgeMargin)) flag = YES;
                 }
                     break;
             }
