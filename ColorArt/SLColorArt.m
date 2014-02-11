@@ -229,7 +229,7 @@
 			contrast = (fLum + 0.05) / (bLum + 0.05);
         
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
-		return contrast > 3.0;
+		return contrast > 2.5;
 	}
     
 	return YES;
@@ -444,10 +444,10 @@
 	{
 		NSUInteger colorCount = [edgeColors countForObject:curColor];
         
-        NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
+        //NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
         
-		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
-			continue;
+		//if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
+		//	continue;
         
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
         
