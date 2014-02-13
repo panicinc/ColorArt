@@ -229,7 +229,7 @@
 			contrast = (fLum + 0.05) / (bLum + 0.05);
         
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
-		return contrast > 2.5;
+        return contrast > 2.5;
 	}
     
 	return YES;
