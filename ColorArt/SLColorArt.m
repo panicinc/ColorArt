@@ -444,10 +444,10 @@
 	{
 		NSUInteger colorCount = [edgeColors countForObject:curColor];
         
-        //NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
-        
-		//if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
-		//	continue;
+//        NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
+//        
+//		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
+//			continue;
         
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
         
@@ -517,8 +517,8 @@
 		{
 			NSUInteger colorCount = [colors countForObject:curColor];
             
-			//if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
-			//	continue;
+			if ( colorCount <= 1 ) // prevent using random colors, threshold should be based on input image size
+				continue;
             
 			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
             
