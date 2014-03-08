@@ -19,7 +19,7 @@
 
 #define kColorThresholdMinimumPercentage 0.01
 #define kColorThresholdMaximumercentageForFading 0.8
-#define kAnalyzingSize NSMakeSize(96, 96)
+#define kAnalyzingSize NSMakeSize(128, 128)
 #define kEdgeMargin kAnalyzingSize.width * 0.15625
 
 
@@ -229,7 +229,7 @@
 			contrast = (fLum + 0.05) / (bLum + 0.05);
         
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
-        return contrast > 2.5;
+        return contrast > 2.f;
 	}
     
 	return YES;
@@ -396,6 +396,15 @@
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
 		{
 			NSColor *color = [imageRep colorAtX:x y:y];
+            CGFloat r, g, b, a;
+            [color getRed:&r green:&g blue:&b alpha:&a];
+            
+            float roundBy = 0.2f;
+            
+            color = [NSColor colorWithCalibratedRed:round(r / roundBy) * roundBy
+                                              green:round(g / roundBy) * roundBy
+                                               blue:round(b / roundBy) * roundBy
+                                              alpha:round(a / roundBy) * roundBy];
             
             BOOL flag = NO;
             
