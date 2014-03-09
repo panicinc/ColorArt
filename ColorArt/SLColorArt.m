@@ -17,10 +17,10 @@
 
 #import "SLColorArt.h"
 
-#define kColorThresholdMinimumPercentage 0.01
+#define kColorThresholdMinimumPercentage 0.001
 #define kColorThresholdMaximumercentageForFading 0.8
 #define kAnalyzingSize NSMakeSize(128, 128)
-#define kEdgeMargin kAnalyzingSize.width * 0.15625
+#define kEdgeMargin kAnalyzingSize.width * 0.1
 
 
 // ----------------------------------------------------
@@ -128,6 +128,18 @@
 	return NO;
 }
 
+- (CGFloat)pc_distinctionBetweenColor:(NSColor *)compareColor
+{
+    NSColor *convertedColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	NSColor *convertedCompareColor = [compareColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	CGFloat r, g, b, a;
+	CGFloat r1, g1, b1, a1;
+    
+	[convertedColor getRed:&r green:&g blue:&b alpha:&a];
+	[convertedCompareColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    
+	return (fabs(r - r1) + fabs(g - g1) + fabs(b - b1)) / 3.f;
+}
 
 - (BOOL)pc_isDistinct:(NSColor*)compareColor
 {
@@ -139,7 +151,7 @@
 	[convertedColor getRed:&r green:&g blue:&b alpha:&a];
 	[convertedCompareColor getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
     
-	CGFloat threshold = .25; //.15
+	CGFloat threshold = .15f;
     
 	if ( fabs(r - r1) > threshold ||
 		fabs(g - g1) > threshold ||
@@ -207,32 +219,7 @@
 
 - (BOOL)pc_isContrastingColor:(NSColor*)color
 {
-	NSColor *backgroundColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	NSColor *foregroundColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-    
-	if ( backgroundColor != nil && foregroundColor != nil )
-	{
-		CGFloat br, bg, bb, ba;
-		CGFloat fr, fg, fb, fa;
-        
-		[backgroundColor getRed:&br green:&bg blue:&bb alpha:&ba];
-		[foregroundColor getRed:&fr green:&fg blue:&fb alpha:&fa];
-        
-		CGFloat bLum = 0.2126 * br + 0.7152 * bg + 0.0722 * bb;
-		CGFloat fLum = 0.2126 * fr + 0.7152 * fg + 0.0722 * fb;
-        
-		CGFloat contrast = 0.;
-        
-		if ( bLum > fLum )
-			contrast = (bLum + 0.05) / (fLum + 0.05);
-		else
-			contrast = (fLum + 0.05) / (bLum + 0.05);
-        
-		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
-        return contrast > 2.f;
-	}
-    
-	return YES;
+    return [self pc_contrastOnBackgroundColor:color] > 0.3f;
 }
 
 - (CGFloat)pc_contrastOnBackgroundColor:(NSColor *)backgroundColor {
@@ -245,7 +232,15 @@
     [backgroundColor getRed:&br green:&bg blue:&bb alpha:nil];
     [foregroundColor getRed:&fr green:&fg blue:&fb alpha:nil];
     
-    return fabs(br - fr) + fabs(bg - fg) + fabs(bb - fb);
+    return (fabs(br - fr) + fabs(bg - fg) + fabs(bb - fb)) / 3.f;
+}
+
+- (CGFloat)pc_colorStandardDeviation {
+    CGFloat r, g, b;
+    [[self colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:nil];
+    
+    float average = (r + g + b) / 3.f;
+    return (fabs(average - r) + fabs(average - g) + fabs(average - b)) / 3.f;
 }
 
 
@@ -282,21 +277,13 @@
 	return self;
 }
 
-- (NSComparisonResult)compare:(PCCountedColor*)object
-{
-	if ( [object isKindOfClass:[PCCountedColor class]] )
-	{
-		if ( self.count < object.count )
-		{
-			return NSOrderedDescending;
-		}
-		else if ( self.count == object.count )
-		{
-			return NSOrderedSame;
-		}
-	}
-    
-	return NSOrderedAscending;
+- (CGFloat)orderBy {
+    return self.count * (25.f + (0.75f * self.color.pc_colorStandardDeviation));
+}
+
+- (NSString *)description {
+    return [NSString localizedStringWithFormat:@"<%@ %ldx r:%f g:%f b:%f>",
+            NSStringFromClass(self.class), self.count, self.color.redComponent, self.color.greenComponent, self.color.blueComponent];
 }
 
 
@@ -308,98 +295,80 @@
 #pragma mark - SLColorArt
 // ----------------------------------------------------
 
-@interface SLColorArt ()
-@property(retain,readwrite) NSColor *backgroundColor;
-@property(retain,readwrite) NSColor *primaryColor;
-@property(retain,readwrite) NSColor *secondaryColor;
-@property(retain,readwrite) NSColor *detailColor;
-@end
-
-
 @implementation SLColorArt
+@synthesize textColors = _textColors;
+@synthesize edgeColor = _edgeColor;
 
-- (id)initWithImage:(NSImage *)image edge:(NSRectEdge)edge
+- (id)initWithImage:(NSImage *)image
+               edge:(NSRectEdge)edge
+ numberOfTextColors:(int)numberOfTextColors
 {
     self = [super init];
     
     if (self)
     {
-		[self analyzeImage:[image scaledImageWithSize:kAnalyzingSize] edge:edge];
+		[self analyzeImage:[image scaledImageWithSize:kAnalyzingSize]
+                      edge:edge
+        numberOfTextColors:numberOfTextColors];
     }
     
     return self;
 }
 
-- (void)analyzeImage:(NSImage *)anImage
+- (void)analyzeImage:(NSImage *)image
                 edge:(NSRectEdge)edge
+  numberOfTextColors:(int)numberOfTextColors
 {
-    NSCountedSet *imageColors = nil;
+    NSCountedSet *colors = nil;
+    NSCountedSet *edgeColors = nil;
+    NSArray *textColors;
+    NSColor *edgeColor = nil;
     BOOL shouldFade;
-	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors edge:edge shouldFade:&shouldFade];
     
-	NSColor *primaryColor = nil;
-	NSColor *secondaryColor = nil;
-	NSColor *detailColor = nil;
-	BOOL darkBackground = [backgroundColor pc_isDarkColor];
+	[self extractColors:&colors
+             edgeColors:&edgeColors
+                 ofEdge:edge
+              fromImage:image];
     
-	[self findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
+    [self findEdgeColor:&edgeColor
+             shouldFade:&shouldFade
+               inColors:edgeColors];
     
-	if ( primaryColor == nil )
-	{
-		if ( darkBackground )
-			primaryColor = [NSColor whiteColor];
-		else
-			primaryColor = [NSColor blackColor];
-	}
     
-	if ( secondaryColor == nil )
-	{
-		if ( darkBackground )
-			secondaryColor = [NSColor whiteColor];
-		else
-			secondaryColor = [NSColor blackColor];
-	}
+	[self find:numberOfTextColors
+    textColors:&textColors
+withBackgroundColor:edgeColor
+      inColors:colors];
     
-	if ( detailColor == nil )
-	{
-		if ( darkBackground )
-			detailColor = [NSColor whiteColor];
-		else
-			detailColor = [NSColor blackColor];
-	}
-    
-    self.backgroundColor = backgroundColor;
-    self.primaryColor = primaryColor;
-	self.secondaryColor = secondaryColor;
-    self.detailColor = detailColor;
+    _edgeColor = edgeColor;
+    _textColors = textColors;
     self.shouldFade = shouldFade;
 }
 
-- (NSColor *)findEdgeColor:(NSImage *)image
-               imageColors:(NSCountedSet **)colors
-                      edge:(NSRectEdge)edge
-                shouldFade:(BOOL *)shouldFade
+- (void)extractColors:(NSCountedSet **)colors
+           edgeColors:(NSCountedSet **)edgeColors
+               ofEdge:(NSRectEdge)edge
+            fromImage:(NSImage *)image
 {
-	NSBitmapImageRep *imageRep = [image bitmapImageRepresentation];
+    NSBitmapImageRep *imageRep = [image bitmapImageRepresentation];
     
-	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) // sanity check
-		return nil;
+	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) return;
     
-	NSInteger pixelsWide = [imageRep pixelsWide];
-	NSInteger pixelsHigh = [imageRep pixelsHigh];
+	NSInteger pixelsWide = imageRep.pixelsWide;
+	NSInteger pixelsHigh = imageRep.pixelsHigh;
     
-	NSCountedSet *imageColors = [[NSCountedSet alloc] initWithCapacity:pixelsWide * pixelsHigh];
-	NSCountedSet *edgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
+	NSCountedSet *tempColors = [[NSCountedSet alloc] initWithCapacity:pixelsWide * pixelsHigh];
+	NSCountedSet *tempEdgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
     
-	for ( NSUInteger x = 0; x < pixelsWide; x++ )
+	for (NSUInteger x = 0; x < pixelsWide; x++)
 	{
-		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
+		for (NSUInteger y = 0; y < pixelsHigh; y++)
 		{
 			NSColor *color = [imageRep colorAtX:x y:y];
             CGFloat r, g, b, a;
             [color getRed:&r green:&g blue:&b alpha:&a];
             
-            float roundBy = 0.2f;
+            float roundBy = 0.1f;
             
             color = [NSColor colorWithCalibratedRed:round(r / roundBy) * roundBy
                                               green:round(g / roundBy) * roundBy
@@ -435,133 +404,123 @@
             }
             
             if (flag) {
-                [edgeColors addObject:color];
+                [tempEdgeColors addObject:color];
             }
 			
-			[imageColors addObject:color];
+			[tempColors addObject:color];
 		}
 	}
     
-	*colors = imageColors;
-    
-    
+	*colors = tempColors;
+    *edgeColors = tempEdgeColors;
+}
+
+- (void)findEdgeColor:(NSColor **)edgeColor
+           shouldFade:(BOOL *)shouldFade
+             inColors:(NSCountedSet *)edgeColors
+{
 	NSEnumerator *enumerator = [edgeColors objectEnumerator];
 	NSColor *curColor = nil;
 	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[edgeColors count]];
+    
+    NSUInteger numberOfEdgePixels = 0;
+    for (PCCountedColor *edgeColor in edgeColors) numberOfEdgePixels += [edgeColors countForObject:edgeColor];
     
 	while ( (curColor = [enumerator nextObject]) != nil )
 	{
 		NSUInteger colorCount = [edgeColors countForObject:curColor];
         
-//        NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
-//        
-//		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
-//			continue;
+        NSInteger randomColorsThreshold = (NSInteger)(numberOfEdgePixels * kColorThresholdMinimumPercentage);
+        
+		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
+			continue;
         
 		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
         
 		[sortedColors addObject:container];
 	}
     
-	[sortedColors sortUsingSelector:@selector(compare:)];
+	[sortedColors sortUsingDescriptors:@[
+        [NSSortDescriptor sortDescriptorWithKey:@"orderBy" ascending:NO]
+    ]];
     
-    
-	PCCountedColor *proposedEdgeColor = nil;
-    
-	if ( [sortedColors count] > 0 )
-	{
-		proposedEdgeColor = [sortedColors objectAtIndex:0];
-        
-		if ( [proposedEdgeColor.color pc_isBlackOrWhite] ) // want to choose color over black/white so we keep looking
-		{
-			for ( NSInteger i = 1; i < [sortedColors count]; i++ )
-			{
-				PCCountedColor *nextProposedColor = [sortedColors objectAtIndex:i];
-                
-				if (((double)nextProposedColor.count / (double)proposedEdgeColor.count) > .3 ) // make sure the second choice color is 30% as common as the first choice
-				{
-					if ( ![nextProposedColor.color pc_isBlackOrWhite] )
-					{
-						proposedEdgeColor = nextProposedColor;
-						break;
-					}
-				}
-				else
-				{
-					// reached color threshold less than 40% of the original proposed edge color so bail
-					break;
-				}
-			}
-		}
-    }
+	PCCountedColor *proposedEdgeColor = sortedColors.firstObject;
+    *edgeColor = (proposedEdgeColor.color.alphaComponent != 0.f) ? proposedEdgeColor.color : NSColor.whiteColor;
     
     // Check if the color needs to fade
-    double edgePixels = ((edge == NSMinXEdge) || (edge == NSMaxXEdge))?pixelsWide:pixelsHigh;
-    if ((double)proposedEdgeColor.count / edgePixels <= kColorThresholdMaximumercentageForFading) {
-        *shouldFade = YES;
-    } else {
-        *shouldFade = NO;
-    }
-    
-	return proposedEdgeColor.color;
+    *shouldFade = (proposedEdgeColor.count / (double)numberOfEdgePixels <= kColorThresholdMaximumercentageForFading);
 }
 
-
-- (void)findTextColors:(NSCountedSet *)colors
-          primaryColor:(NSColor **)primaryColor
-        secondaryColor:(NSColor **)secondaryColor
-           detailColor:(NSColor **)detailColor
-       backgroundColor:(NSColor *)backgroundColor
+- (void)find:(int)numberOf
+  textColors:(NSArray **)textColors
+withBackgroundColor:(NSColor *)backgroundColor
+    inColors:(NSCountedSet *)colors
 {
-	NSEnumerator *enumerator = [colors objectEnumerator];
-	NSColor *curColor = nil;
-	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[colors count]];
-	BOOL findDarkTextColor = ![backgroundColor pc_isDarkColor];
+    NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[colors count]];
     
-	while ( (curColor = [enumerator nextObject]) != nil )
-	{
-		curColor = [curColor pc_colorWithMinimumSaturation:.15];
-        
-		if ( [curColor pc_isDarkColor] == findDarkTextColor )
-		{
-			NSUInteger colorCount = [colors countForObject:curColor];
-            
-			if ( colorCount <= 1 ) // prevent using random colors, threshold should be based on input image size
-				continue;
-            
-			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
-            
+    NSUInteger numberOfPixels = 0;
+    for (PCCountedColor *color in colors) numberOfPixels += [colors countForObject:color];
+    
+    for (NSColor *currentColor in colors)
+    {
+            NSUInteger colorCount = [colors countForObject:currentColor];
+			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:currentColor count:colorCount];
 			[sortedColors addObject:container];
-		}
-	}
+    }
     
-	[sortedColors sortUsingSelector:@selector(compare:)];
+    [sortedColors sortUsingDescriptors:@[
+        [NSSortDescriptor sortDescriptorWithKey:@"orderBy" ascending:NO]
+    ]];
     
-	for ( PCCountedColor *curContainer in sortedColors )
+    NSMutableArray *tempTextColors = [NSMutableArray arrayWithCapacity:numberOf];
+    NSUInteger currentNumberOfColors = 0;
+    
+    for (PCCountedColor *currentContainer in sortedColors)
 	{
-		curColor = curContainer.color;
+		NSColor *currentColor = currentContainer.color;
         
-		if ( *primaryColor == nil )
-		{
-			if ( [curColor pc_isContrastingColor:backgroundColor] )
-				*primaryColor = curColor;
-		}
-		else if ( *secondaryColor == nil )
-		{
-			if ( ![*primaryColor pc_isDistinct:curColor] || ![curColor pc_isContrastingColor:backgroundColor] )
-				continue;
+        if ([currentColor pc_isContrastingColor:backgroundColor]) {
+            BOOL isDistinct = YES;
             
-			*secondaryColor = curColor;
-		}
-		else if ( *detailColor == nil )
-		{
-			if ( ![*secondaryColor pc_isDistinct:curColor] || ![*primaryColor pc_isDistinct:curColor] || ![curColor pc_isContrastingColor:backgroundColor] )
-				continue;
+            for (int previousColorIndex = 0; previousColorIndex < currentNumberOfColors; previousColorIndex++)
+            {
+                CGFloat distinction = [currentColor pc_distinctionBetweenColor:tempTextColors[previousColorIndex]];
+                
+                if (distinction < 0.02f || distinction > 0.5f) isDistinct = NO;
+            }
             
-			*detailColor = curColor;
-			break;
-		}
+            if (!isDistinct) continue;
+            
+            tempTextColors[currentNumberOfColors++] = currentColor;
+            
+            if (currentNumberOfColors == numberOf) break;
+        }
 	}
+    
+    for (NSUInteger index = 0; index < numberOf; index++) {
+        if (index >= tempTextColors.count) {
+            if (index > 0) {
+                NSColor *previousColor = tempTextColors[index - 1];
+                tempTextColors[index] = [previousColor colorWithAlphaComponent:fmax(previousColor.alphaComponent - 0.25f, 0.4f)];
+            } else {
+                tempTextColors[index] = backgroundColor.pc_isDarkColor ? NSColor.whiteColor : NSColor.blackColor;
+            }
+        }
+    }
+    
+    [tempTextColors sortUsingComparator:^NSComparisonResult(NSColor *obj1, NSColor *obj2) {
+        CGFloat contrast1 = [obj1 pc_contrastOnBackgroundColor:backgroundColor];
+        CGFloat contrast2 = [obj2 pc_contrastOnBackgroundColor:backgroundColor];
+        
+        if (contrast1 < contrast2)
+            return NSOrderedDescending;
+        else if (contrast1 == contrast2)
+            return NSOrderedSame;
+        
+        return NSOrderedAscending;
+    }];
+    
+    *textColors = tempTextColors;
 }
 
 @end

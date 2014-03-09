@@ -24,16 +24,15 @@
 - (BOOL)pc_isBlackOrWhite;
 - (BOOL)pc_isContrastingColor:(NSColor*)color;
 - (CGFloat)pc_contrastOnBackgroundColor:(NSColor *)backgroundColor;
+- (CGFloat)pc_colorStandardDeviation;
 @end
 
 
 @interface SLColorArt : NSObject
-@property(retain, readonly) NSColor *backgroundColor;
-@property(retain, readonly) NSColor *primaryColor;
-@property(retain, readonly) NSColor *secondaryColor;
-@property(retain, readonly) NSColor *detailColor;
+@property (strong, readonly) NSColor *edgeColor;
+@property (strong, readonly) NSArray *textColors;
 @property BOOL shouldFade;
 
-- (id)initWithImage:(NSImage *)image edge:(NSRectEdge)edge;
+- (id)initWithImage:(NSImage *)image edge:(NSRectEdge)edge numberOfTextColors:(int)numberOfTextColors;
 
 @end
