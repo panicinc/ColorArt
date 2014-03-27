@@ -219,7 +219,34 @@
 
 - (BOOL)pc_isContrastingColor:(NSColor*)color
 {
-    return [self pc_contrastOnBackgroundColor:color] > 0.3f;
+	NSColor *backgroundColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	NSColor *foregroundColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+	if ( backgroundColor != nil && foregroundColor != nil )
+	{
+        if ([self pc_contrastOnBackgroundColor:color] <= 0.35f) return NO;
+        
+		CGFloat br, bg, bb, ba;
+		CGFloat fr, fg, fb, fa;
+        
+		[backgroundColor getRed:&br green:&bg blue:&bb alpha:&ba];
+		[foregroundColor getRed:&fr green:&fg blue:&fb alpha:&fa];
+        
+		CGFloat bLum = 0.2126 * br + 0.7152 * bg + 0.0722 * bb;
+		CGFloat fLum = 0.2126 * fr + 0.7152 * fg + 0.0722 * fb;
+        
+		CGFloat contrast = 0.;
+        
+		if ( bLum > fLum )
+			contrast = (bLum + 0.05) / (fLum + 0.05);
+		else
+			contrast = (fLum + 0.05) / (bLum + 0.05);
+        
+		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
+        return contrast > 2.f;
+	}
+    
+	return NO;
 }
 
 - (CGFloat)pc_contrastOnBackgroundColor:(NSColor *)backgroundColor {
