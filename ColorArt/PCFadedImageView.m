@@ -31,7 +31,7 @@
 	[self.image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 
 	// lazy way to get fade color
-	NSColor *backgroundColor = [[self window] backgroundColor];
+	NSColor *backgroundColor = [NSColor colorWithCGColor:[[self window] backgroundColor].CGColor];
 		
 	NSGradient *gradient = [[NSGradient alloc] initWithColorsAndLocations:backgroundColor, 0.0, backgroundColor, .01, [backgroundColor colorWithAlphaComponent:0.05], 1.0, nil];
 
