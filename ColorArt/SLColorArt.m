@@ -19,18 +19,18 @@
 
 #define kColorThresholdMinimumPercentage 0.01
 
-@interface NSColor (DarkAddition)
+@interface NSColor (SLDarkAddition)
 
-- (BOOL)pc_isDarkColor;
-- (BOOL)pc_isDistinct:(NSColor*)compareColor;
-- (NSColor*)pc_colorWithMinimumSaturation:(CGFloat)saturation;
-- (BOOL)pc_isBlackOrWhite;
-- (BOOL)pc_isContrastingColor:(NSColor*)color;
+- (BOOL)sl_isDarkColor;
+- (BOOL)sl_isDistinct:(NSColor*)compareColor;
+- (NSColor*)sl_colorWithMinimumSaturation:(CGFloat)saturation;
+- (BOOL)sl_isBlackOrWhite;
+- (BOOL)sl_isContrastingColor:(NSColor*)color;
 
 @end
 
 
-@interface PCCountedColor : NSObject
+@interface SLCountedColor : NSObject
 
 @property (assign) NSUInteger count;
 @property (strong) NSColor *color;
@@ -113,7 +113,7 @@
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
 	NSColor *detailColor = nil;
-	BOOL darkBackground = [backgroundColor pc_isDarkColor];
+	BOOL darkBackground = [backgroundColor sl_isDarkColor];
 
 	[self findTextColors:imageColors primaryColor:&primaryColor secondaryColor:&secondaryColor detailColor:&detailColor backgroundColor:backgroundColor];
 
@@ -152,7 +152,7 @@
 
 - (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors
 {
-	NSBitmapImageRep *imageRep = [[image representations] lastObject];
+	NSImageRep *imageRep = [[image representations] lastObject];
 
 	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) // sanity check
 		return nil;
@@ -167,7 +167,7 @@
 	{
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
 		{
-			NSColor *color = [imageRep colorAtX:x y:y];
+			NSColor *color = [(NSBitmapImageRep*)imageRep colorAtX:x y:y];
 
 			if ( x == 0 )
 			{
@@ -194,7 +194,7 @@
 		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
 			continue;
 
-		PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
+		SLCountedColor *container = [[SLCountedColor alloc] initWithColor:curColor count:colorCount];
 
 		[sortedColors addObject:container];
 	}
@@ -202,21 +202,21 @@
 	[sortedColors sortUsingSelector:@selector(compare:)];
 
 
-	PCCountedColor *proposedEdgeColor = nil;
+	SLCountedColor *proposedEdgeColor = nil;
 
 	if ( [sortedColors count] > 0 )
 	{
 		proposedEdgeColor = [sortedColors objectAtIndex:0];
 
-		if ( [proposedEdgeColor.color pc_isBlackOrWhite] ) // want to choose color over black/white so we keep looking
+		if ( [proposedEdgeColor.color sl_isBlackOrWhite] ) // want to choose color over black/white so we keep looking
 		{
 			for ( NSInteger i = 1; i < [sortedColors count]; i++ )
 			{
-				PCCountedColor *nextProposedColor = [sortedColors objectAtIndex:i];
+				SLCountedColor *nextProposedColor = [sortedColors objectAtIndex:i];
 
 				if (((double)nextProposedColor.count / (double)proposedEdgeColor.count) > .3 ) // make sure the second choice color is 30% as common as the first choice
 				{
-					if ( ![nextProposedColor.color pc_isBlackOrWhite] )
+					if ( ![nextProposedColor.color sl_isBlackOrWhite] )
 					{
 						proposedEdgeColor = nextProposedColor;
 						break;
@@ -240,20 +240,20 @@
 	NSEnumerator *enumerator = [colors objectEnumerator];
 	NSColor *curColor = nil;
 	NSMutableArray *sortedColors = [NSMutableArray arrayWithCapacity:[colors count]];
-	BOOL findDarkTextColor = ![backgroundColor pc_isDarkColor];
+	BOOL findDarkTextColor = ![backgroundColor sl_isDarkColor];
 
 	while ( (curColor = [enumerator nextObject]) != nil )
 	{
-		curColor = [curColor pc_colorWithMinimumSaturation:.15];
+		curColor = [curColor sl_colorWithMinimumSaturation:.15];
 
-		if ( [curColor pc_isDarkColor] == findDarkTextColor )
+		if ( [curColor sl_isDarkColor] == findDarkTextColor )
 		{
 			NSUInteger colorCount = [colors countForObject:curColor];
 
 			//if ( colorCount <= 2 ) // prevent using random colors, threshold should be based on input image size
 			//	continue;
 
-			PCCountedColor *container = [[PCCountedColor alloc] initWithColor:curColor count:colorCount];
+			SLCountedColor *container = [[SLCountedColor alloc] initWithColor:curColor count:colorCount];
 
 			[sortedColors addObject:container];
 		}
@@ -261,25 +261,25 @@
 
 	[sortedColors sortUsingSelector:@selector(compare:)];
 
-	for ( PCCountedColor *curContainer in sortedColors )
+	for ( SLCountedColor *curContainer in sortedColors )
 	{
 		curColor = curContainer.color;
 
 		if ( *primaryColor == nil )
 		{
-			if ( [curColor pc_isContrastingColor:backgroundColor] )
+			if ( [curColor sl_isContrastingColor:backgroundColor] )
 				*primaryColor = curColor;
 		}
 		else if ( *secondaryColor == nil )
 		{
-			if ( ![*primaryColor pc_isDistinct:curColor] || ![curColor pc_isContrastingColor:backgroundColor] )
+			if ( ![*primaryColor sl_isDistinct:curColor] || ![curColor sl_isContrastingColor:backgroundColor] )
 				continue;
 
 			*secondaryColor = curColor;
 		}
 		else if ( *detailColor == nil )
 		{
-			if ( ![*secondaryColor pc_isDistinct:curColor] || ![*primaryColor pc_isDistinct:curColor] || ![curColor pc_isContrastingColor:backgroundColor] )
+			if ( ![*secondaryColor sl_isDistinct:curColor] || ![*primaryColor sl_isDistinct:curColor] || ![curColor sl_isContrastingColor:backgroundColor] )
 				continue;
             
 			*detailColor = curColor;
@@ -291,9 +291,9 @@
 @end
 
 
-@implementation NSColor (DarkAddition)
+@implementation NSColor (SLDarkAddition)
 
-- (BOOL)pc_isDarkColor
+- (BOOL)sl_isDarkColor
 {
 	NSColor *convertedColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	CGFloat r, g, b, a;
@@ -311,7 +311,7 @@
 }
 
 
-- (BOOL)pc_isDistinct:(NSColor*)compareColor
+- (BOOL)sl_isDistinct:(NSColor*)compareColor
 {
 	NSColor *convertedColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	NSColor *convertedCompareColor = [compareColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
@@ -343,7 +343,7 @@
 }
 
 
-- (NSColor*)pc_colorWithMinimumSaturation:(CGFloat)minSaturation
+- (NSColor*)sl_colorWithMinimumSaturation:(CGFloat)minSaturation
 {
 	NSColor *tempColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 
@@ -366,7 +366,7 @@
 }
 
 
-- (BOOL)pc_isBlackOrWhite
+- (BOOL)sl_isBlackOrWhite
 {
 	NSColor *tempColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 
@@ -387,7 +387,7 @@
 }
 
 
-- (BOOL)pc_isContrastingColor:(NSColor*)color
+- (BOOL)sl_isContrastingColor:(NSColor*)color
 {
 	NSColor *backgroundColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	NSColor *foregroundColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
@@ -421,7 +421,7 @@
 @end
 
 
-@implementation PCCountedColor
+@implementation SLCountedColor
 
 - (id)initWithColor:(NSColor*)color count:(NSUInteger)count
 {
@@ -436,9 +436,9 @@
 	return self;
 }
 
-- (NSComparisonResult)compare:(PCCountedColor*)object
+- (NSComparisonResult)compare:(SLCountedColor*)object
 {
-	if ( [object isKindOfClass:[PCCountedColor class]] )
+	if ( [object isKindOfClass:[SLCountedColor class]] )
 	{
 		if ( self.count < object.count )
 		{
