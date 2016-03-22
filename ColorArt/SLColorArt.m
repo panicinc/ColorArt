@@ -42,7 +42,6 @@
 
 @interface SLColorArt ()
 
-@property NSSize scaledSize;
 @property(retain,readwrite) NSColor *backgroundColor;
 @property(retain,readwrite) NSColor *primaryColor;
 @property(retain,readwrite) NSColor *secondaryColor;
@@ -52,63 +51,75 @@
 
 @implementation SLColorArt
 
++ (SLColorArt*)colorArtWithImage:(NSImage*)image scaledSize:(NSSize)size
+{
+	return [[SLColorArt alloc] initWithImage:image scaledSize:size];
+}
+
+
 - (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size
 {
-    self = [super init];
-
-    if (self)
-    {
-        self.scaledSize = size;
-		
+	self = [super init];
+	
+	if (self)
+	{
 		NSImage *finalImage = [self scaleImage:image size:size];
 		self.scaledImage = finalImage;
 		
 		[self analyzeImage:image];
-    }
-
-    return self;
+	}
+	
+	return self;
 }
 
 
 - (NSImage*)scaleImage:(NSImage*)image size:(NSSize)scaledSize
 {
-    NSSize imageSize = [image size];
-    NSImage *squareImage = [[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)];
-    NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
-    NSRect drawRect;
-
-    // make the image square
-    if ( imageSize.height > imageSize.width )
-    {
-        drawRect = NSMakeRect(0, imageSize.height - imageSize.width, imageSize.width, imageSize.width);
-    }
-    else
-    {
-        drawRect = NSMakeRect(0, 0, imageSize.height, imageSize.height);
-    }
-
-    [squareImage lockFocus];
-    [image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.width) fromRect:drawRect operation:NSCompositeSourceOver fraction:1.0];
-    [squareImage unlockFocus];
-
-    // scale the image to the desired size
-
-    [scaledImage lockFocus];
-    [squareImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-    [scaledImage unlockFocus];
-
-    // convert back to readable bitmap data
-
-    CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
-    NSImage *finalImage = [[NSImage alloc] initWithSize:scaledImage.size];
-    [finalImage addRepresentation:bitmapRep];
-    return finalImage;
+	NSSize imageSize = [image size];
+	NSImage *squareImage = [[NSImage alloc] initWithSize:NSMakeSize(imageSize.width, imageSize.width)];
+	NSImage *scaledImage = nil;
+	NSRect drawRect;
+	
+	// make the image square
+	if ( imageSize.height > imageSize.width )
+	{
+		drawRect = NSMakeRect(0, imageSize.height - imageSize.width, imageSize.width, imageSize.width);
+	}
+	else
+	{
+		drawRect = NSMakeRect(0, 0, imageSize.height, imageSize.height);
+	}
+	
+	// use native square size if passed zero size
+	if ( NSEqualSizes(scaledSize, NSZeroSize) )
+	{
+		scaledSize = drawRect.size;
+	}
+	
+	scaledImage = [[NSImage alloc] initWithSize:scaledSize];
+	
+	[squareImage lockFocus];
+	[image drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.width) fromRect:drawRect operation:NSCompositeSourceOver fraction:1.0];
+	[squareImage unlockFocus];
+	
+	// scale the image to the desired size
+	
+	[scaledImage lockFocus];
+	[squareImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[scaledImage unlockFocus];
+	
+	// convert back to readable bitmap data
+	
+	CGImageRef cgImage = [scaledImage CGImageForProposedRect:NULL context:nil hints:nil];
+	NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+	NSImage *finalImage = [[NSImage alloc] initWithSize:scaledImage.size];
+	[finalImage addRepresentation:bitmapRep];
+	return finalImage;
 }
 
 - (void)analyzeImage:(NSImage*)anImage
 {
-    NSCountedSet *imageColors = nil;
+	NSCountedSet *imageColors = nil;
 	NSColor *backgroundColor = [self findEdgeColor:anImage imageColors:&imageColors];
 	NSColor *primaryColor = nil;
 	NSColor *secondaryColor = nil;
@@ -119,63 +130,86 @@
 
 	if ( primaryColor == nil )
 	{
-		NSLog(@"missed primary");
+#if DEBUG
+		NSLog(@"SLColorArt::missed primary");
+#endif
 		if ( darkBackground )
 			primaryColor = [NSColor whiteColor];
 		else
 			primaryColor = [NSColor blackColor];
 	}
-
+	
 	if ( secondaryColor == nil )
 	{
-		NSLog(@"missed secondary");
+#if DEBUG
+		NSLog(@"SLColorArt::missed secondary");
+#endif
 		if ( darkBackground )
 			secondaryColor = [NSColor whiteColor];
 		else
 			secondaryColor = [NSColor blackColor];
 	}
-
+	
 	if ( detailColor == nil )
 	{
-		NSLog(@"missed detail");
+#if DEBUG
+		NSLog(@"SLColorArt::missed detail");
+#endif
 		if ( darkBackground )
 			detailColor = [NSColor whiteColor];
 		else
 			detailColor = [NSColor blackColor];
 	}
 
-    self.backgroundColor = backgroundColor;
-    self.primaryColor = primaryColor;
+	self.backgroundColor = backgroundColor;
+	self.primaryColor = primaryColor;
 	self.secondaryColor = secondaryColor;
-    self.detailColor = detailColor;
+	self.detailColor = detailColor;
 }
+
+#define fequalzero(a) (fabs(a) < FLT_EPSILON)
 
 - (NSColor*)findEdgeColor:(NSImage*)image imageColors:(NSCountedSet**)colors
 {
 	NSImageRep *imageRep = [[image representations] lastObject];
-
-	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] ) // sanity check
-		return nil;
-
+	
+	if ( ![imageRep isKindOfClass:[NSBitmapImageRep class]] )
+	{
+		[image lockFocus];
+		imageRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, image.size.width, image.size.height)];
+		[image unlockFocus];
+	}
+	
+	//colorAtX:y: and imageRep need to be in the same color space
+	imageRep = [(NSBitmapImageRep*)imageRep bitmapImageRepByConvertingToColorSpace:[NSColorSpace genericRGBColorSpace] renderingIntent:NSColorRenderingIntentDefault];
+	
 	NSInteger pixelsWide = [imageRep pixelsWide];
 	NSInteger pixelsHigh = [imageRep pixelsHigh];
-
+	
 	NSCountedSet *imageColors = [[NSCountedSet alloc] initWithCapacity:pixelsWide * pixelsHigh];
 	NSCountedSet *leftEdgeColors = [[NSCountedSet alloc] initWithCapacity:pixelsHigh];
-
+	NSUInteger	searchColumnX = 0;
+	
 	for ( NSUInteger x = 0; x < pixelsWide; x++ )
 	{
 		for ( NSUInteger y = 0; y < pixelsHigh; y++ )
 		{
 			NSColor *color = [(NSBitmapImageRep*)imageRep colorAtX:x y:y];
-
-			if ( x == 0 )
+			
+			if ( x == searchColumnX )
 			{
-				[leftEdgeColors addObject:color];
+				//make sure it's a meaningful color
+				if ( color.alphaComponent > .5 )
+					[leftEdgeColors addObject:color];
 			}
-
-			[imageColors addObject:color];
+			
+			if ( !fequalzero(color.alphaComponent) )
+				[imageColors addObject:color];
 		}
+		
+		// background is clear, keep looking in next column for background color
+		if ( leftEdgeColors.count == 0 )
+			searchColumnX += 1;
 	}
 
 	*colors = imageColors;
@@ -189,8 +223,8 @@
 	{
 		NSUInteger colorCount = [leftEdgeColors countForObject:curColor];
 
-        NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
-        
+		NSInteger randomColorsThreshold = (NSInteger)(pixelsHigh * kColorThresholdMinimumPercentage);
+
 		if ( colorCount <= randomColorsThreshold ) // prevent using random colors, threshold based on input image height
 			continue;
 
@@ -200,7 +234,6 @@
 	}
 
 	[sortedColors sortUsingSelector:@selector(compare:)];
-
 
 	SLCountedColor *proposedEdgeColor = nil;
 
@@ -281,7 +314,7 @@
 		{
 			if ( ![*secondaryColor sl_isDistinct:curColor] || ![*primaryColor sl_isDistinct:curColor] || ![curColor sl_isContrastingColor:backgroundColor] )
 				continue;
-            
+
 			*detailColor = curColor;
 			break;
 		}
@@ -327,18 +360,18 @@
 		fabs(g - g1) > threshold ||
 		fabs(b - b1) > threshold ||
 		fabs(a - a1) > threshold )
-    {
-        // check for grays, prevent multiple gray colors
+	{
+		// check for grays, prevent multiple gray colors
 
-        if ( fabs(r - g) < .03 && fabs(r - b) < .03 )
-        {
-            if ( fabs(r1 - g1) < .03 && fabs(r1 - b1) < .03 )
-                return NO;
-        }
+		if ( fabs(r - g) < .03 && fabs(r - b) < .03 )
+		{
+			if ( fabs(r1 - g1) < .03 && fabs(r1 - b1) < .03 )
+				return NO;
+		}
 
-        return YES;
-    }
-
+		return YES;
+	}
+	
 	return NO;
 }
 
@@ -413,7 +446,7 @@
 		//return contrast > 3.0; //3-4.5 W3C recommends 3:1 ratio, but that filters too many colors
 		return contrast > 1.6;
 	}
-
+	
 	return YES;
 }
 
@@ -449,7 +482,7 @@
 			return NSOrderedSame;
 		}
 	}
-    
+
 	return NSOrderedAscending;
 }
 

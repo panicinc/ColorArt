@@ -24,5 +24,8 @@
 @property(retain, readonly) NSColor *detailColor;
 @property(nonatomic, copy) NSImage *scaledImage;
 
++ (SLColorArt*)colorArtWithImage:(NSImage*)image scaledSize:(NSSize)size;
+
 - (id)initWithImage:(NSImage*)image scaledSize:(NSSize)size;
+
 @end

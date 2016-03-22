@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
                 <menuItem title="ColorArt" id="56">
@@ -705,6 +705,7 @@
                     </progressIndicator>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="414.5" y="378"/>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
@@ -712,7 +713,6 @@
                 <outlet property="imageView" destination="542" id="576"/>
                 <outlet property="primaryField" destination="552" id="577"/>
                 <outlet property="progress" destination="IzV-BG-yQp" id="XbH-1w-AB1"/>
-                <outlet property="secondary1Field" destination="566" id="579"/>
                 <outlet property="secondaryField" destination="558" id="578"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
